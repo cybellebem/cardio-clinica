@@ -17,28 +17,11 @@ cd cardio-clinica
 ```bash
 cd backend
 
-npm init -y
-npm install express cors dotenv bcrypt jsonwebtoken
-npm install --save-dev nodemon
+npm install
+
 ```
 
-### Configurar scripts no `package.json`
-
-```json
-{
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/server.js",
-  "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
-  },
-    ...
-}
-```
-
-### Criar arquivo `.env`
+### Alterar arquivo `.env`
 
 ```env
 PORT=3000
