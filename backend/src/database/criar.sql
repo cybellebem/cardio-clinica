@@ -16,15 +16,15 @@ create table if not exists pessoas(
 create table if not exists funcionarios(
     id int auto_increment primary key,
     id_pessoa int not null,
-    funcao varchar(50) not null
-    foreign key (id_pessoa) references pessoas(id),
+    funcao varchar(50) not null,
+    foreign key (id_pessoa) references pessoas(id)
 );
 
 create table if not exists medicos(
     id int auto_increment primary key,
     id_pessoa int not null,
-    crm varchar(20) not null
-    foreign key (id_pessoa) references pessoas(id),
+    crm varchar(20) not null,
+    foreign key (id_pessoa) references pessoas(id)
 );
 
 create table if not exists pacientes(
@@ -43,7 +43,7 @@ create table if not exists consultas(
     peso int not null,
     diagnostico varchar(200) not null,
     tratamento varchar(200) not null,
-    status_pagamento varchar(20) default 'Pendente'
+    status_pagamento varchar(20) default 'Pendente',
     foreign key (id_paciente) references pacientes(id),
-    foreign key (id_medico) references medicos(id),
+    foreign key (id_medico) references medicos(id)
 )
