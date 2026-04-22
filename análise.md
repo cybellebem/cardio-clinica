@@ -4,6 +4,7 @@ Arquivo com um resumo do que for analisado antes e durante o desenvolvimento, on
 
 Se alterado, favor marcar em amarelo as alterações, principalmente durante o desenvolvimento
 
+
 ## Tabelas:
 
 Tabelas do banco de dados
@@ -15,6 +16,7 @@ Tabelas do banco de dados
 - data nascimento
 - telefone
 - endereço
+- senha
 - status (ativo,desativo,bloqueado?,outros)
 
 ### Funcionário:
