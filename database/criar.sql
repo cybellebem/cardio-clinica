@@ -4,13 +4,13 @@ use cardio_clinica;
 
 create table if not exists pessoas(
     id int auto_increment primary key,
-    cpf varchar(20) not null,
+    cpf varchar(20) not null unique,
     nome varchar(100) not null,
     data_nascimento date not null,
     telefone varchar(50) not null,
     endereco varchar(50) not null,
     senha varchar(100) not null,
-    status varchar(20) default 'Ativo'
+    status ENUM("Ativo","Inativo") default "Ativo"
 );
 
 create table if not exists funcionarios(
@@ -46,4 +46,4 @@ create table if not exists consultas(
     status_pagamento varchar(20) default 'Pendente',
     foreign key (id_paciente) references pacientes(id),
     foreign key (id_medico) references medicos(id)
-)
+);

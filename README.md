@@ -29,7 +29,7 @@ JWT_SECRET=sua_chave_secreta
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=sua_senha
-DB_NAME=cardio_clinica
+DB_DATABASE=cardio_clinica
 ```
 
 ---
