@@ -17,19 +17,19 @@ class PessoaModel{
     }
 
     static async criar(dados){
-        const {cpf,nome,data,fone,endereco,senha}=dados
+        const {cpf,nome,data,telefone,endereco,senha}=dados
         const [result]=await db.query(
             "insert into pessoas (cpf,nome,data_nascimento,telefone,endereco,senha) values (?,?,?,?,?,?)",
-            [cpf,nome,data,fone,endereco,senha]
+            [cpf,nome,data,telefone,endereco,senha]
         )
         return result.insertId
     }
 
     static async atualizar(id,dados){
-        const {cpf,nome,data,fone,endereco,senha}=dados
+        const {cpf,nome,data,telefone,endereco,senha}=dados
         await db.query(
             "update pessoas set cpf=?, nome=?, data_nascimento=?, telefone=?, endereco=?, senha=? where id=?",
-            [cpf,nome,data,fone,endereco,senha,id]
+            [cpf,nome,data,telefone,endereco,senha,id]
         )
     }
 
