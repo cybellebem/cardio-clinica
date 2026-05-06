@@ -19,6 +19,15 @@ class ProtegidoController{
             res.status(error.status||500).json({message:error.message})
         }
     }
+
+    static async atualizarPessoa(req,res){
+        try{
+            const result=await PessoaService.atualizar(req.body)
+            return res.status(200).json({message:"Atualizado com sucesso",id:req.body.id})
+        }catch(error){
+            res.status(error.status||500).json({message:error.message})
+        }
+    }
 }
 
 module.exports=ProtegidoController

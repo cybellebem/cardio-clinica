@@ -15,3 +15,31 @@ Content-Type: application/json
     "endereco":"Rua A, 120",
     "senha":"abc"
 }
+
+### atualizar pessoa
+POST {{baseURL}}/atualizar
+Content-Type: application/json
+
+{
+    "id":2,
+    "cpf":"993.998.750-16",
+    "nome":"Maria da Silva",
+    "data":"2002-02-02",
+    "telefone":"54 4321-4321",
+    "endereco":"Rua B, 210",
+    "senha":"bca"
+}
+
+### atualizar pessoa
+POST {{baseURL}}/atualizar
+Content-Type: application/json
+
+{
+    "id":2,
+    "cpf":"52998224725",
+    "nome":"João da Silva",
+    "data":"2000-01-01",
+    "telefone":"54 1234-1234",
+    "endereco":"Rua A, 120",
+    "senha":"abc"
+}

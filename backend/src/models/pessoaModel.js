@@ -25,8 +25,8 @@ class PessoaModel{
         return result.insertId
     }
 
-    static async atualizar(id,dados){
-        const {cpf,nome,data,telefone,endereco,senha}=dados
+    static async atualizar(dados){
+        const {id,cpf,nome,data,telefone,endereco,senha}=dados
         await db.query(
             "update pessoas set cpf=?, nome=?, data_nascimento=?, telefone=?, endereco=?, senha=? where id=?",
             [cpf,nome,data,telefone,endereco,senha,id]
