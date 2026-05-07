@@ -51,38 +51,63 @@ Tabelas do banco de dados
 ## Backend
 Rotas a serem feitas
 
-### Nível Médico
+### Médico
 - incluir consulta
-    - validar CPF paciente
-    - validar temperatura+peso (intervalo valores)
+    - validar se paciente cadastrado (através do CPF)
+    - validar se paciente com cadastro ativo
+    - validar temperatura e peso (valores negativos ou muito grandes)
     - importante retornar nome e CPF do paciente
     - dados do médico já devem estar em cache, não precisaria retornar
-- visualizar consultas (que ele fez)
+- listar consultas (que ele fez)
 
-### Nível Administrador do site
+### Administrador do site
 - gerenciar funcionários
     - incluir
+        - validar se pessoa cadastrada (através do CPF)
+        - validar se CPF já consta como funcionário
     - alterar
+        - dados pessoa
+        - função
     - ativar
     - desativar
+    - listar todos
+    - listar específico
 
 ### Atendente
-- gerenciar médicos
+- gerenciar pessoas
     - incluir
     - alterar
     - ativar
     - desativar
+    - listar todos
+    - listar específico
+- gerenciar médicos
+    - incluir
+        - validar se pessoa cadastrada (através do CPF)
+        - validar se CPF já consta como médico
+    - alterar
+        - dados pessoa
+        - CRM
+    - ativar
+    - desativar
+    - listar todos
+    - listar específico
 - manter pacientes
     - incluir
-    - alterar
-    - <div style="color:red;"> permitir ativar/desativar? incerto</div>
+        - validar se pessoa cadastrada (através do CPF)
+        - validar se CPF já consta como paciente
+    <!-- - alterar (desnecessário: campos herdados da pessoa) -->
+    - listar todos
+    - listar específico
+    - ativar
+    - desativar
 
 ### Geral
 - login e logoff
 
 
 
-# Frontend
+## Frontend
 Telas do frontend a serem feitas
 
 Pelo que já foi enviado, após feito no Figma:

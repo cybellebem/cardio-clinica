@@ -16,14 +16,14 @@ create table if not exists pessoas(
 create table if not exists funcionarios(
     id int auto_increment primary key,
     id_pessoa int not null,
-    funcao varchar(50) not null,
+    funcao ENUM("Funcionário","Admin","Paciente","Médico") not null,
     foreign key (id_pessoa) references pessoas(id)
 );
 
 create table if not exists medicos(
     id int auto_increment primary key,
     id_pessoa int not null,
-    crm varchar(20) not null,
+    crm varchar(20) not null unique,
     foreign key (id_pessoa) references pessoas(id)
 );
 
