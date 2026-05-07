@@ -43,3 +43,12 @@ Content-Type: application/json
     "endereco":"Rua A, 120",
     "senha":"abc"
 }
+
+### mostra pessoa específica
+GET {{baseURL}}/lista/2
+
+### ativar pessoa
+POST {{baseURL}}/ativar/2
+
+### desativar pessoa
+POST {{baseURL}}/desativar/2
