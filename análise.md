@@ -2,8 +2,6 @@
 
 Arquivo com um resumo do que for analisado antes e durante o desenvolvimento, onde pode ser alterado bem como usado como um checklist para ver o que já foi feito e o que está pendente
 
-Se alterado, favor marcar em amarelo as alterações, principalmente durante o desenvolvimento
-
 
 ## Tabelas:
 
@@ -17,28 +15,15 @@ Tabelas do banco de dados
 - telefone
 - endereço
 - senha
-- status (ativo,desativo,bloqueado?,outros)
-
-### Funcionário:
-- ID único
-- ID pessoa (HERANÇA Pessoa)
-- função
-- OBS: nada impede que ele seja um paciente também, em algum momento
-
-### Médico:
-- ID único
-- ID pessoa (HERANÇA Pessoa)
-- CRM
-
-### Paciente:
-- ID único
-- ID pessoa (HERANÇA Pessoa)
+- CRM (se função=médico)
+- status (ativo, desativo)
+- função (funcionário, admin, paciente, médico)
 
 ### Consulta
 - ID único
 - data e hora
-- ID paciente
-- ID médico
+- ID paciente (pessoa com função=Paciente)
+- ID médico (pessoa com função=Médico)
 - sintomas
 - temperatura
 - peso
@@ -52,55 +37,42 @@ Tabelas do banco de dados
 Rotas a serem feitas
 
 ### Médico
-- incluir consulta
-    - validar se paciente cadastrado (através do CPF)
-    - validar se paciente com cadastro ativo
+- incluir consultas
+    - validar se pessoa cadastrada (através do CPF)
+    - validar se pessoa tem função paciente
+    - validar se pessoa está ativa
     - validar temperatura e peso (valores negativos ou muito grandes)
-    - importante retornar nome e CPF do paciente
-    - dados do médico já devem estar em cache, não precisaria retornar
-- listar consultas (que ele fez)
+    - retornar nome e CPF do paciente
+    - não retornar dados do médico
+- listar consultas (que o médico fez)
 
 ### Administrador do site
-- gerenciar funcionários
+- gerenciar funcionários: atendente e admin
     - incluir
         - validar se pessoa cadastrada (através do CPF)
-        - validar se CPF já consta como funcionário
     - alterar
-        - dados pessoa
-        - função
+        - validar se pessoa cadastrada (através do CPF)
+        - validar se pessoa é atendente ou admin
+        - alterar: dados pessoa, exceto função
     - ativar
     - desativar
     - listar todos
     - listar específico
 
 ### Atendente
-- gerenciar pessoas
-    - incluir
-    - alterar
-    - ativar
-    - desativar
-    - listar todos
-    - listar específico
-- gerenciar médicos
+- gerenciar médicos e manter pacientes
     - incluir
         - validar se pessoa cadastrada (através do CPF)
-        - validar se CPF já consta como médico
+        - se médico, validar se médico já cadastrado (através do CRM)
     - alterar
-        - dados pessoa
-        - CRM
-    - ativar
-    - desativar
-    - listar todos
-    - listar específico
-- manter pacientes
-    - incluir
         - validar se pessoa cadastrada (através do CPF)
-        - validar se CPF já consta como paciente
-    <!-- - alterar (desnecessário: campos herdados da pessoa) -->
-    - listar todos
-    - listar específico
+        - validar se pessoa é médico ou paciente
+            - se médico, alterar CRM
+        - alterar: dados pessoa, exceto função
     - ativar
     - desativar
+    - listar todos
+    - listar específico
 
 ### Geral
 - login e logoff

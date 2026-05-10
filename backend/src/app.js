@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
-const protegidoRoutes=require("./routes/protegidoRoutes")
+const pessoaRoutes=require("./routes/pessoaRoutes")
+const funcionarioRoutes=require("./routes/funcionarioRoutes")
 
 const app = express();
 
@@ -10,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // rotas
-app.use("/",protegidoRoutes)
+app.use("/pessoas",pessoaRoutes)
 
 // health check
 app.get("/", (req, res) => {
