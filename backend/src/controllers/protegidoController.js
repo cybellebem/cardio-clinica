@@ -22,7 +22,6 @@ class ProtegidoController{
 
     static async incluirPessoa(req,res){
         try{
-            // console.log(req.body)
             const resultado=await PessoaService.criar(req.body)
             return res.status(201).json(resultado)
         }catch(error){
