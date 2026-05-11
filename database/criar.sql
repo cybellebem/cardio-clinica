@@ -12,7 +12,7 @@ create table if not exists pessoas(
     senha varchar(255) not null,
     crm varchar(20) unique,
     status enum("Ativo","Inativo") default "Ativo",
-    funcao enum("Funcionário","Admin","Paciente","Médico") not null
+    funcao enum("Atendente","Admin","Paciente","Médico") not null
 );
 
 create table if not exists consultas(

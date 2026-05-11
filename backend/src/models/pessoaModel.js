@@ -1,35 +1,64 @@
 const db=require("../config/database")
 
+const camposSeguros="id,cpf,nome,data_nascimento,telefone,endereco,crm,status,funcao"
+
 class PessoaModel{
-    static async listar(){
-        const [resultados]=await db.query("select * from pessoas")
+    static async listar(funcoes){
+        const [resultados]=await db.query(`select ${camposSeguros} from pessoas where funcao in (${funcoes.map(()=>'?').join(",")})`,funcoes)
         return resultados
     }
 
     static async buscarPorId(id){
-        const [resultado]=await db.query("select * from pessoas where id=?",[id])
+        const [resultado]=await db.query(`select ${camposSeguros} from pessoas where id=?`,[id])
         return resultado[0]
     }
 
     static async buscarPorCpf(cpf){
-        const [resultado]=await db.query("select * from pessoas where cpf=?",[cpf])
+        const [resultado]=await db.query(`select ${camposSeguros} from pessoas where cpf=?`,[cpf])
+        return resultado[0]
+    }
+
+    static async buscarPorCrm(crm){
+        const [resultado]=await db.query(`select ${camposSeguros} from pessoas where crm=?`,[crm])
+        return resultado[0]
+    }
+
+    static async buscarPorCpfLogin(cpf){
+        const [resultado]=await db.query("select id,cpf,nome,funcao,senha,status from pessoas where cpf=?",[cpf])
         return resultado[0]
     }
 
     static async criar(dados){
-        const {cpf,nome,data,telefone,endereco,senha}=dados
+        const {cpf,nome,data,telefone,endereco,senha,funcao,crm}=dados
         const [result]=await db.query(
-            "insert into pessoas (cpf,nome,data_nascimento,telefone,endereco,senha) values (?,?,?,?,?,?)",
-            [cpf,nome,data,telefone,endereco,senha]
+            "insert into pessoas (cpf,nome,data_nascimento,telefone,endereco,senha,funcao,crm) values (?,?,?,?,?,?,?,?)",
+            [cpf,nome,data,telefone,endereco,senha,funcao,crm]
         )
         return result.insertId
     }
 
     static async atualizar(dados){
-        const {id,cpf,nome,data,telefone,endereco,senha}=dados
+        const {id,cpf,nome,data: data_nascimento,telefone,endereco,senha,crm}=dados
+
+        const campos=[]
+        const valores=[]
+
+        const camposPermitidos={cpf,nome,data_nascimento,telefone,endereco,senha,crm}
+
+        for(const [coluna,valor] of Object.entries(camposPermitidos)){
+            if(valor!==undefined){
+                campos.push(`${coluna}=?`)
+                valores.push(valor)
+            }
+        }
+        
+        if(campos.length===0) throw Object.assign(new Error("Nenhum campo para atualizar"),{status:400});
+
+        valores.push(id)
+
         await db.query(
-            "update pessoas set cpf=?, nome=?, data_nascimento=?, telefone=?, endereco=?, senha=? where id=?",
-            [cpf,nome,data,telefone,endereco,senha,id]
+            `update pessoas set ${campos.join(", ")} where id=?`,
+            valores
         )
     }
 

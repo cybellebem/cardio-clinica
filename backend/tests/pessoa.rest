@@ -1,54 +1,61 @@
 @baseURL=http://localhost:3000/pessoas
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg0Njk4NTUsImV4cCI6MTc3ODQ3MzQ1NX0.uz2mc6HKyLD_jF2HCWKJMLRFKPmLUSSv3W9BtkPQEcQ
 
 ### lista pessoas
 GET {{baseURL}}/lista
+Authorization: Bearer {{token}}
+
+### mostra pessoa específica (atendente)
+GET {{baseURL}}/lista/2
+Authorization: Bearer {{token}}
+
+### ativar pessoa
+PUT {{baseURL}}/ativar/2
+Authorization: Bearer {{token}}
+
+### desativar pessoa
+PUT {{baseURL}}/desativar/2
+Authorization: Bearer {{token}}
 
 ### criar pessoa
 POST {{baseURL}}/incluir
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "cpf":"52998224725",
+    "cpf":"46809872000",
     "nome":"João da Silva",
-    "data":"2000-01-01",
-    "telefone":"54 1234-1234",
-    "endereco":"Rua A, 120",
-    "senha":"abc"
+    "data":"1980-01-01",
+    "telefone":"51990000001",
+    "endereco":"Rua Assis Brasil, 120",
+    "senha":"senha123",
+    "funcao":"Atendente"
 }
 
 ### atualizar pessoa
-POST {{baseURL}}/atualizar
+PUT {{baseURL}}/atualizar/10
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "id":2,
-    "cpf":"993.998.750-16",
+    "cpf":"11229077022",
     "nome":"Maria da Silva",
-    "data":"2002-02-02",
-    "telefone":"54 4321-4321",
-    "endereco":"Rua B, 210",
-    "senha":"bca"
+    "data":"1980-01-01",
+    "telefone":"51990000001",
+    "endereco":"Rua Assis de Brasil, 120",
+    "senha":"pwd321"
 }
 
 ### atualizar pessoa
-POST {{baseURL}}/atualizar
+PUT {{baseURL}}/atualizar/10
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "id":2,
-    "cpf":"52998224725",
+    "cpf":"46809872000",
     "nome":"João da Silva",
-    "data":"2000-01-01",
-    "telefone":"54 1234-1234",
-    "endereco":"Rua A, 120",
-    "senha":"abc"
+    "data":"1980-01-01",
+    "telefone":"51990000001",
+    "endereco":"Rua Assis Brasil, 120",
+    "senha":"senha123"
 }
-
-### mostra pessoa específica
-GET {{baseURL}}/lista/2
-
-### ativar pessoa
-POST {{baseURL}}/ativar/2
-
-### desativar pessoa
-POST {{baseURL}}/desativar/2

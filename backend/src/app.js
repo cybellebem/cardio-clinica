@@ -1,16 +1,17 @@
-const express = require("express");
-const cors = require("cors");
+const express=require("express");
+const cors=require("cors");
 
-const pessoaRoutes=require("./routes/pessoaRoutes")
-const funcionarioRoutes=require("./routes/funcionarioRoutes")
+const pessoaRoutes=require("./routes/protectedRoutes")
+const authRoutes=require("./routes/authRoutes")
 
-const app = express();
+const app=express();
 
 // middlewares
 app.use(cors());
 app.use(express.json());
 
 // rotas
+app.use("/auth",authRoutes)
 app.use("/pessoas",pessoaRoutes)
 
 // health check

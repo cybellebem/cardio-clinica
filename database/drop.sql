@@ -1,0 +1,1 @@
+drop database cardio_clinica;
