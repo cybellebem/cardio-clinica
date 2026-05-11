@@ -28,5 +28,5 @@ insert into consultas (data_hora, id_paciente, id_medico, sintomas, temperatura,
 ("2026-05-02 10:00:00", 6, 4, "Palpitações frequentes", 36.50, 61.20, "Arritmia leve", "Solicitado eletrocardiograma", "Pendente"),
 ("2026-05-03 14:15:00", 7, 4, "Cansaço excessivo", 37.00, 75.00, "Insuficiência cardíaca inicial", "Mudança alimentar e medicação", "Pago"),
 ("2026-05-04 09:45:00", 8, 4, "Pressão alta constante", 36.80, 68.40, "Hipertensão estágio 1", "Controle de sódio e exercícios", "Pendente"),
-("2026-05-05 16:20:00", 9, 4, "Dor no braço esquerdo", 37.10, 90.30, "Suspeita de angina", "Encaminhamento para exames", "Pago"),
-("2026-05-06 11:00:00", 5, 10, "Tontura e pressão baixa", 36.40, 82.50, "Hipotensão arterial", "Aumento da hidratação e acompanhamento", "Pago");
+("2026-05-05 16:20:00", 9, 5, "Dor no braço esquerdo", 37.10, 90.30, "Suspeita de angina", "Encaminhamento para exames", "Pago"),
+("2026-05-06 11:00:00", 5, 5, "Tontura e pressão baixa", 36.40, 82.50, "Hipotensão arterial", "Aumento da hidratação e acompanhamento", "Pago");

@@ -1,5 +1,5 @@
 @baseURL=http://localhost:3000/pessoas
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg1MTgxNDMsImV4cCI6MTc3ODUyMTc0M30.j-eaFxzSksYe1JEmO6O-A3pYXYfafcxlhWbsBZgnJpw
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg1MzE2MDksImV4cCI6MTc3ODUzNTIwOX0.xx_Ojz3AAS00uq7vyfY4VVpM9Q496S7rqF_brf1vZsU
 
 ### lista pessoas
 GET {{baseURL}}/lista

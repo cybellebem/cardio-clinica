@@ -33,7 +33,6 @@ class ConsultaModel{
             "insert into consultas (data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento) values (?,?,?,?,?,?,?,?)",
             [data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento]
         )
-        console.log(resultado)
         return resultado.insertId
     }
 }

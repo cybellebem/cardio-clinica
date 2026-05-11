@@ -1,7 +1,7 @@
 @baseURL=http://localhost:3000/consultas
 @login=http://localhost:3000/auth/login
-@tokenMedico1=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZnVuY2FvIjoiTcOpZGljbyIsImlhdCI6MTc3ODUxODIyNywiZXhwIjoxNzc4NTIxODI3fQ.7lisJHx5zfufiaUNIEc97MsChulJhZTXhOf6OaswnfI
-@tokenMedico2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImZ1bmNhbyI6Ik3DqWRpY28iLCJpYXQiOjE3Nzg1MTgyMzQsImV4cCI6MTc3ODUyMTgzNH0.OsCOx1yRe2cT0eiD3q41MFG94ITszEVDYz1MePndgiQ
+@tokenMedico1=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZnVuY2FvIjoiTcOpZGljbyIsImlhdCI6MTc3ODUzMTUyMSwiZXhwIjoxNzc4NTM1MTIxfQ.rmbVBv3wY42M4JS5ccbikwMJMnKkbUdzviXA89CDQMI
+@tokenMedico2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZnVuY2FvIjoiTcOpZGljbyIsImlhdCI6MTc3ODUzMTUyOCwiZXhwIjoxNzc4NTM1MTI4fQ.iXcnPu0fC3HjQ64k-CBHlQyYP5U1USAjlb5b_HV7Vxg
 
 ### login médico 1
 POST {{login}}
@@ -29,13 +29,28 @@ Authorization: Bearer {{tokenMedico1}}
 GET {{baseURL}}/lista
 Authorization: Bearer {{tokenMedico2}}
 
-### incluir consulta
+### incluir consulta através do médico 1
+POST {{baseURL}}/incluir
+Content-Type: application/json
+Authorization: Bearer {{tokenMedico1}}
+
+{
+    "data_hora": "2026-05-11 14:00",
+    "id_paciente": 5,
+    "sintomas": "Dor de cabeça e tontura",
+    "temperatura": "36.90",
+    "peso": "82.50",
+    "diagnostico": "Hipertensão em investigação",
+    "tratamento": "Solicitado monitorização da pressão arterial"
+}
+
+### incluir consulta através do médico 2
 POST {{baseURL}}/incluir
 Content-Type: application/json
 Authorization: Bearer {{tokenMedico2}}
 
 {
-    "data_hora": "2026-05-11T14:00:00.000Z",
+    "data_hora": "2026-05-11 14:00",
     "id_paciente": 5,
     "sintomas": "Dor de cabeça e tontura",
     "temperatura": "36.90",
