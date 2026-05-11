@@ -2,7 +2,6 @@ const ConsultaService=require("../services/consultaService")
 
 class ConsultaController{
     static async listarConsultas(req,res){
-        console.log(req.pessoa.id)
         try{
             const resultado=await ConsultaService.listar(req.pessoa.id)
             res.status(200).json({consultas:resultado})

@@ -120,7 +120,7 @@ class PessoaService{
         
         // salvar no banco
         const id=await PessoaModel.criar(pessoa)
-        return {message:"Pessoa inserida com sucesso",id:id}
+        return {message:"Pessoa inserida com sucesso",id}
     }
 
     static async atualizar(id,dados,funcaoReq){
