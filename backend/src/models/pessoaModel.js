@@ -38,7 +38,7 @@ class PessoaModel{
     }
 
     static async atualizar(dados){
-        const {id,cpf,nome,data: data_nascimento,telefone,endereco,senha,crm}=dados
+        const {id,cpf,nome,data_nascimento,telefone,endereco,senha,crm}=dados
 
         const campos=[]
         const valores=[]
@@ -46,7 +46,7 @@ class PessoaModel{
         const camposPermitidos={cpf,nome,data_nascimento,telefone,endereco,senha,crm}
 
         for(const [coluna,valor] of Object.entries(camposPermitidos)){
-            if(valor!==undefined){
+            if(valor!==undefined && valor!==""){
                 campos.push(`${coluna}=?`)
                 valores.push(valor)
             }

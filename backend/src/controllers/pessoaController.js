@@ -13,7 +13,7 @@ class PessoaController{
     static async listarPessoaPorId(req,res){
         try{
             const id=req.params.id
-            const resultado=await PessoaService.buscarPorId(id,req.pessoa.funcao)
+            const resultado=await PessoaService.buscarPorId(id,req.pessoa)
             res.status(200).json({pessoa:resultado})
         }catch(error){
             res.status(error.status||500).json({message:error.message})
@@ -32,13 +32,14 @@ class PessoaController{
     static async atualizarPessoa(req,res){
         try{
             const id=req.params.id
-            const pessoa=await PessoaService.atualizar(id,req.body,req.pessoa.funcao)
-            return res.status(200).json({message:"Atualizado com sucesso",pessoaAtualizada:{
-                id:pessoa.id,
-                nome:pessoa.nome,
-                status:pessoa.status,
-                funcao:pessoa.funcao,
-            }})
+            const pessoa=await PessoaService.atualizar(id,req.body,req.pessoa)
+            // return res.status(200).json({message:"Atualizado com sucesso",pessoaAtualizada:{
+            //     id:pessoa.id,
+            //     nome:pessoa.nome,
+            //     status:pessoa.status,
+            //     funcao:pessoa.funcao,
+            // }})
+            return res.status(200).json({message:"Atualizado com sucesso",pessoa})
         }catch(error){
             res.status(error.status||500).json({message:error.message})
         }
@@ -47,7 +48,7 @@ class PessoaController{
     static async ativarPessoa(req,res){
         try{
             const id=req.params.id
-            const result=await PessoaService.ativar(id,req.pessoa.funcao)
+            const result=await PessoaService.ativar(id,req.pessoa)
             return res.status(200).json({message:"Usuário ativado com sucesso",id:id})
         }catch(error){
             res.status(error.status||500).json({message:error.message})
@@ -57,7 +58,7 @@ class PessoaController{
     static async desativarPessoa(req,res){
         try{
             const id=req.params.id
-            const result=await PessoaService.desativar(id,req.pessoa.funcao)
+            const result=await PessoaService.desativar(id,req.pessoa)
             return res.status(200).json({message:"Usuário desativado com sucesso",id:id})
         }catch(error){
             res.status(error.status||500).json({message:error.message})

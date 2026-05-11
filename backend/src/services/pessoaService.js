@@ -58,11 +58,12 @@ class PessoaService{
         return await PessoaModel.listar(funcoesPermitidas)
     }
 
-    static async buscarPorId(id,funcao){
+    static async buscarPorId(id,requisitante){
         const pessoa=await PessoaModel.buscarPorId(id)
         if(!pessoa) erro("Pessoa não encontrada",404);
 
-        const permitido=pessoa.funcao===funcao||permissoesListar[funcao]?.includes(pessoa.funcao)||permissoesGerenciar[funcao]?.includes(pessoa.funcao)
+        const {funcao:funcaoRequisitante,id:idRequisitante}=requisitante
+        const permitido=id==idRequisitante||permissoesListar[funcaoRequisitante]?.includes(pessoa.funcao)||permissoesGerenciar[funcaoRequisitante]?.includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
 
         return pessoa
@@ -108,7 +109,6 @@ class PessoaService{
         if(existeCpf) erro("CPF já está cadastrado",409);
 
         // checagem CRM exclusivo para médicos
-        console.log(dados)
         checarMedico(funcao,crm)
 
         // objeto final
@@ -123,24 +123,25 @@ class PessoaService{
         return {message:"Pessoa inserida com sucesso",id}
     }
 
-    static async atualizar(id,dados,funcaoReq){
-        const {cpf,nome,data,telefone,endereco,senha,crm,funcao}=dados
+    static async atualizar(id,dados,requisitante){
+        const {cpf,nome,data_nascimento,telefone,endereco,senha,crm}=dados
+        const {funcao:funcaoReq}=requisitante
 
         if(!id) erro("ID não foi informado",400);
 
         // checagem pessoa existe
-        let pessoa=await this.buscarPorId(id,funcaoReq)
+        let pessoa=await this.buscarPorId(id,requisitante)
 
         // checagem permissão
         const permitido=permissoesGerenciar[funcaoReq]?.includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
 
         // checagens CPF e data de nascimento
-        const cpfLimpo=checarCpf(cpf)
-        checarData(data)
+        const cpfLimpo = cpf ? checarCpf(cpf) : pessoa.cpf
+        if(data_nascimento) checarData(data_nascimento);
 
         // checagem CRM exclusivo para médicos
-        checarMedico(funcao,crm)
+        if(crm) checarMedico(pessoa.funcao,crm);
 
         // checagem CPF não usado em outro cadastro
         const pessoaCpf=await PessoaModel.buscarPorCpf(cpfLimpo)
@@ -150,33 +151,33 @@ class PessoaService{
         if(dados.funcao) erro("Tentativa de mudança de função foi bloqueada",403)
 
         // objeto final
-        pessoa={
-            ...pessoa,
-            cpf:cpfLimpo,
-            nome:nome??undefined,
-            data:data??undefined,
-            telefone:telefone??undefined,
-            endereco:endereco??undefined,
-            crm:crm??undefined
-        }
+        const pessoaAtualizada={}
+        if(cpf) pessoaAtualizada.cpf=cpf;
+        if(nome) pessoaAtualizada.nome=nome;
+        if(data_nascimento) pessoaAtualizada.data_nascimento=data_nascimento
+        if(telefone) pessoaAtualizada.telefone=telefone
+        if(endereco) pessoaAtualizada.endereco=endereco
+        if(crm) pessoaAtualizada.crm=crm
 
         // se necessário atualizar senha
-        if(typeof senha==="string" && senha.length>0) pessoa.senha=await bcrypt.hash(senha,10);
+        if(typeof senha==="string" && senha.length>0) pessoaAtualizada.senha=await bcrypt.hash(senha,10);
+
+        pessoa={...pessoa,...pessoaAtualizada}
 
         await PessoaModel.atualizar(pessoa)
         return pessoa
     }
 
-    static async ativar(id,funcaoReq){
-        const pessoa=await this.buscarPorId(id,funcaoReq)
-        const permitido=permissoesGerenciar[funcaoReq]?.includes(pessoa.funcao)
+    static async ativar(id,requisitante){
+        const pessoa=await this.buscarPorId(id,requisitante)
+        const permitido=permissoesGerenciar[requisitante.funcao]?.includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
         await PessoaModel.ativar(id)
     }
 
-    static async desativar(id,funcaoReq){
-        const pessoa=await this.buscarPorId(id,funcaoReq)
-        const permitido=permissoesGerenciar[funcaoReq]?.includes(pessoa.funcao)
+    static async desativar(id,requisitante){
+        const pessoa=await this.buscarPorId(id,requisitante)
+        const permitido=permissoesGerenciar[requisitante.funcao]?.includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado (service)",403);
         await PessoaModel.desativar(id)
     }
