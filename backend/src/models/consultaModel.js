@@ -28,11 +28,12 @@ class ConsultaModel{
     }
 
     static async incluir(dados){
-        const {data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento,status_pagamento}=dados
+        const {data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento}=dados
         const [resultado]=await db.query(
-            "insert into consultas (data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento,status_pagamento) values (?,?,?,?,?,?,?,?,?)",
-            [data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento,status_pagamento]
+            "insert into consultas (data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento) values (?,?,?,?,?,?,?,?)",
+            [data_hora,id_paciente,id_medico,sintomas,temperatura,peso,diagnostico,tratamento]
         )
+        console.log(resultado)
         return resultado.insertId
     }
 }

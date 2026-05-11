@@ -1,0 +1,45 @@
+@baseURL=http://localhost:3000/consultas
+@login=http://localhost:3000/auth/login
+@tokenMedico1=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZnVuY2FvIjoiTcOpZGljbyIsImlhdCI6MTc3ODUxODIyNywiZXhwIjoxNzc4NTIxODI3fQ.7lisJHx5zfufiaUNIEc97MsChulJhZTXhOf6OaswnfI
+@tokenMedico2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImZ1bmNhbyI6Ik3DqWRpY28iLCJpYXQiOjE3Nzg1MTgyMzQsImV4cCI6MTc3ODUyMTgzNH0.OsCOx1yRe2cT0eiD3q41MFG94ITszEVDYz1MePndgiQ
+
+### login médico 1
+POST {{login}}
+Content-Type: application/json
+
+{
+    "cpf":"03209484040",
+    "senha":"senha123"
+}
+
+### login médico 2
+POST {{login}}
+Content-Type: application/json
+
+{
+    "cpf":"58192477088",
+    "senha":"senha123"
+}
+
+### lista de consultas médico 1
+GET {{baseURL}}/lista
+Authorization: Bearer {{tokenMedico1}}
+
+### lista de consultas médico 2
+GET {{baseURL}}/lista
+Authorization: Bearer {{tokenMedico2}}
+
+### incluir consulta
+POST {{baseURL}}/incluir
+Content-Type: application/json
+Authorization: Bearer {{tokenMedico2}}
+
+{
+    "data_hora": "2026-05-11T14:00:00.000Z",
+    "id_paciente": 5,
+    "sintomas": "Dor de cabeça e tontura",
+    "temperatura": "36.90",
+    "peso": "82.50",
+    "diagnostico": "Hipertensão em investigação",
+    "tratamento": "Solicitado monitorização da pressão arterial"
+}
