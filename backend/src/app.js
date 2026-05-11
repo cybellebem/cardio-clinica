@@ -1,8 +1,9 @@
 const express=require("express");
 const cors=require("cors");
 
-const pessoaRoutes=require("./routes/protectedRoutes")
 const authRoutes=require("./routes/authRoutes")
+const pessoaRoutes=require("./routes/pessoaRoutes")
+const consultaRoutes=require("./routes/consultaRoutes")
 
 const app=express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 // rotas
 app.use("/auth",authRoutes)
 app.use("/pessoas",pessoaRoutes)
+app.use("/consultas",consultaRoutes)
 
 // health check
 app.get("/", (req, res) => {

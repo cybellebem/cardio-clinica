@@ -1,0 +1,30 @@
+@baseURL=http://localhost:3000/consultas
+@login=http://localhost:3000/auth/login
+@tokenMedico1=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZnVuY2FvIjoiTcOpZGljbyIsImlhdCI6MTc3ODUwMjM0OCwiZXhwIjoxNzc4NTA1OTQ4fQ.LAlDoOWkomKMDPN9TptaSTwB8ntVw_a_ZQeDboTaKmk
+@tokenMedico2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImZ1bmNhbyI6Ik3DqWRpY28iLCJpYXQiOjE3Nzg1MDI2OTEsImV4cCI6MTc3ODUwNjI5MX0.m8sS256pf5d5Sb0BT77R8-__0jY638gtouGk_odORfs
+
+### login médico 1
+POST {{login}}
+Content-Type: application/json
+
+{
+    "cpf":"03209484040",
+    "senha":"senha123"
+}
+
+### login médico 2
+POST {{login}}
+Content-Type: application/json
+
+{
+    "cpf":"58192477088",
+    "senha":"senha123"
+}
+
+### lista de consultas médico 1
+GET {{baseURL}}/lista
+Authorization: Bearer {{tokenMedico1}}
+
+### lista de consultas médico 2
+GET {{baseURL}}/lista
+Authorization: Bearer {{tokenMedico2}}

@@ -1,10 +1,10 @@
 const PessoaService=require("../services/pessoaService")
 
-class ProtegidoController{
+class PessoaController{
     static async listarPessoas(req,res){
         try{
-            const result=await PessoaService.listar(req.pessoa.funcao)
-            res.status(200).json({pessoas:result})
+            const resultado=await PessoaService.listar(req.pessoa.funcao)
+            res.status(200).json({pessoas:resultado})
         }catch(error){
             res.status(error.status||500).json({message:error.message})
         }
@@ -65,4 +65,4 @@ class ProtegidoController{
     }
 }
 
-module.exports=ProtegidoController
+module.exports=PessoaController

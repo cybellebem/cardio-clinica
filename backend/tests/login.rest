@@ -1,5 +1,5 @@
 @baseURL=http://localhost:3000/auth/login
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg0NjE4OTMsImV4cCI6MTc3ODQ2NTQ5M30.LVJYmdrAwCPCS080WlmKkhmAo-f0Bux2kMfzA-8xpHE
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg1MDIzNDAsImV4cCI6MTc3ODUwNTk0MH0.DnGo-6zcacF62c4f3QsBHS-adnCERNrnGSWfQSbvfz8
 
 ### login admin
 POST {{baseURL}}
