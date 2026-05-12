@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "test": "jest"
+    "test": "jest",
+    "setup": "node src/config/setup.js",
+    "seed": "node src/config/seed.js",
+    "reset": "npm run setup && npm run seed"
   },
   "keywords": [],
   "author": "",
