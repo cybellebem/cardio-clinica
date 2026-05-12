@@ -33,13 +33,12 @@ class PessoaController{
         try{
             const id=req.params.id
             const pessoa=await PessoaService.atualizar(id,req.body,req.pessoa)
-            // return res.status(200).json({message:"Atualizado com sucesso",pessoaAtualizada:{
-            //     id:pessoa.id,
-            //     nome:pessoa.nome,
-            //     status:pessoa.status,
-            //     funcao:pessoa.funcao,
-            // }})
-            return res.status(200).json({message:"Atualizado com sucesso",pessoa})
+            return res.status(200).json({message:"Atualizado com sucesso",pessoaAtualizada:{
+                id:pessoa.id,
+                nome:pessoa.nome,
+                status:pessoa.status,
+                funcao:pessoa.funcao,
+            }})
         }catch(error){
             res.status(error.status||500).json({message:error.message})
         }

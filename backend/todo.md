@@ -6,3 +6,4 @@
 
 ## Testes
 - fazer automatização
+- arrumar checagem CRM
