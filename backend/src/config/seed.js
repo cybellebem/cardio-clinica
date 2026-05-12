@@ -13,7 +13,8 @@ async function main(){
     console.log("Inserindo admin")
     await connection.execute(`
         insert into pessoas (cpf, nome, data_nascimento, telefone, endereco, senha, crm, status, funcao) values
-        ('06589474001', 'Marcos Vinícius Almeida', '1980-01-01', '51990000001', 'Rua das Acácias, 120 - Centro', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Admin')
+        ('06589474001', 'Marcos Vinícius Almeida', '1980-01-01', '51990000001', 'Rua das Acácias, 120 - Centro', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Admin'),
+        ('57303635084', 'Rogério Teixeira Barros', '1976-09-14', '51988766542', 'Rua das Oliveiras, 784 - Bairro Floresta', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Admin')
     `)
 
     console.log("Inserindo atendentes")

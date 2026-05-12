@@ -175,6 +175,7 @@ class PessoaService{
     }
 
     static async ativar(id,requisitante){
+        if(id==requisitante.id) erro("Não pode ativar seu próprio cadastro",403);
         const pessoa=await this.buscarPorId(id,requisitante)
         const permitido=permissoesGerenciar[requisitante.funcao]?.includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
@@ -182,6 +183,7 @@ class PessoaService{
     }
 
     static async desativar(id,requisitante){
+        if(id==requisitante.id) erro("Não pode desativar seu próprio cadastro",403);
         const pessoa=await this.buscarPorId(id,requisitante)
         const permitido=permissoesGerenciar[requisitante.funcao]?.includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);

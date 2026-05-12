@@ -1,15 +1,16 @@
 const app=require("../src/app")
 const request=require("supertest")
 const db=require("../src/config/database")
+const id=require("./valores")
 var token
 
-const idSelf=4,idPaciente=6,idMedico=5,idAdmin=1,idAtendente=3,idConsulta=1,idConsultaProibida=5
+const idSelf=5
 
 beforeAll(async () => {
     await db.query(`
         update pessoas
         set status='Ativo'
-        where cpf in ('03209484040','96145395001')
+        where cpf in ('03209484040','96145395001','06589474001')
     `)
 })
 
@@ -34,37 +35,37 @@ describe("Login",()=>{
 })
 
 describe("Listagens",()=>{
-    test("listar pacientes",async()=>{
+    test("lista pacientes",async()=>{
         const res=await request(app)
             .get("/pessoas/lista")
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(200)
     })
 
-    test("NÃO lista médico específico",async()=>{
-        const res=await request(app)
-            .get(`/pessoas/lista/${idMedico}`)
-            .set("Authorization",`Bearer ${token}`)
-        expect(res.statusCode).toBe(403)
-    })
-
     test("lista paciente específico",async()=>{
         const res=await request(app)
-            .get(`/pessoas/lista/${idPaciente}`)
+            .get(`/pessoas/lista/${id.paciente}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(200)
     })
 
+    test("NÃO lista médico específico",async()=>{
+        const res=await request(app)
+            .get(`/pessoas/lista/${id.medico}`)
+            .set("Authorization",`Bearer ${token}`)
+        expect(res.statusCode).toBe(403)
+    })
+
     test("NÃO lista admin específico",async()=>{
         const res=await request(app)
-            .get(`/pessoas/lista/${idAdmin}`)
+            .get(`/pessoas/lista/${id.admin}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO lista atendente específico",async()=>{
         const res=await request(app)
-            .get(`/pessoas/lista/${idAtendente}`)
+            .get(`/pessoas/lista/${id.atendente}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
@@ -85,14 +86,14 @@ describe("Listagens",()=>{
 
     test("lista consulta específica que ele fez",async()=>{
         const res=await request(app)
-            .get(`/consultas/lista/${idConsulta}`)
+            .get(`/consultas/lista/${id.consulta}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(200)
     })
 
     test("NÃO lista consulta específica que ele não fez",async()=>{
         const res=await request(app)
-            .get(`/consultas/lista/${idConsultaProibida}`)
+            .get(`/consultas/lista/${id.consultaProibida}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(404)
     })
@@ -101,28 +102,28 @@ describe("Listagens",()=>{
 describe("Ativar e desativar",()=>{
     test("NÃO ativa médico específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/ativar/${idMedico}`)
+            .put(`/pessoas/ativar/${id.medico}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO desativa médico específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/desativar/${idMedico}`)
+            .put(`/pessoas/desativar/${id.medico}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO ativa paciente específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/ativar/${idPaciente}`)
+            .put(`/pessoas/ativar/${id.paciente}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO desativa paciente específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/desativar/${idPaciente}`)
+            .put(`/pessoas/desativar/${id.paciente}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
@@ -143,28 +144,28 @@ describe("Ativar e desativar",()=>{
 
     test("NÃO ativa admin específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/ativar/${idAdmin}`)
+            .put(`/pessoas/ativar/${id.admin}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO desativa admin específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/desativar/${idAdmin}`)
+            .put(`/pessoas/desativar/${id.admin}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO ativa atendente específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/ativar/${idAtendente}`)
+            .put(`/pessoas/ativar/${id.atendente}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
 
     test("NÃO desativa atendente específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/desativar/${idAtendente}`)
+            .put(`/pessoas/desativar/${id.atendente}`)
             .set("Authorization",`Bearer ${token}`)
         expect(res.statusCode).toBe(403)
     })
@@ -173,7 +174,7 @@ describe("Ativar e desativar",()=>{
 describe("Alterações",()=>{
     test("NÃO altera médico específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/atualizar/${idMedico}`)
+            .put(`/pessoas/atualizar/${id.medico}`)
             .send({
                 "cpf": "99894784062",
                 "nome": "Dra. Camila Ferreira Lopes",
@@ -187,7 +188,7 @@ describe("Alterações",()=>{
 
     test("NÃO altera paciente específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/atualizar/${idPaciente}`)
+            .put(`/pessoas/atualizar/${id.paciente}`)
             .send({
                 "cpf":"00482581050",
                 "nome":"Bruno Henrique da Rocha",
@@ -200,7 +201,7 @@ describe("Alterações",()=>{
 
     test("NÃO altera admin específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/atualizar/${idAdmin}`)
+            .put(`/pessoas/atualizar/${id.admin}`)
             .send({
                 "cpf": "06589474001",
                 "nome": "Marcos Vinícius Almeida",
@@ -212,7 +213,7 @@ describe("Alterações",()=>{
 
     test("NÃO altera atendente específico",async()=>{
         const res=await request(app)
-            .put(`/pessoas/atualizar/${idAtendente}`)
+            .put(`/pessoas/atualizar/${id.atendente}`)
             .send({
                 "cpf": "33229115007",
                 "nome": "Rafael Oliveira Santos",
