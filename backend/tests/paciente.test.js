@@ -6,7 +6,7 @@ const apiFactory=require("./helpers/api")
 const esperaStatus=require("./helpers/status")
 
 var token,api
-const idSelf=1
+const idSelf=7
 
 beforeAll(async () => {
     await db.query(`
@@ -27,7 +27,7 @@ describe("Login",()=>{
     test("logar",async()=>{
         const res=await request(app)
             .post("/auth/login")
-            .send({"cpf":"06589474001","senha":"senha123"})
+            .send({"cpf":"91751299066","senha":"senha123"})
         expect(res.statusCode).toBe(200)
         expect(res.body.token).toBeDefined()
         expect(typeof res.body.token).toBe("string")
@@ -39,12 +39,12 @@ describe("Login",()=>{
 
 describe("Listagens",()=>{
     const casos=[
-        ["lista todos os usuários","/pessoas/lista",200],
-        ["lista paciente específico",`/pessoas/lista/${id.paciente}`,200],
-        ["lista médico específico",`/pessoas/lista/${id.medico}`,200],
-        ["lista admin específico",`/pessoas/lista/${id.admin}`,200],
-        ["lista atendente específico",`/pessoas/lista/${id.atendente}`,200],
-        ["lista a si mesmo",`/pessoas/lista/${idSelf}`,200],
+        ["NÃO lista todos os usuários","/pessoas/lista",403],
+        ["NÃO lista paciente específico",`/pessoas/lista/${id.paciente}`,403],
+        ["NÃO lista médico específico",`/pessoas/lista/${id.medico}`,403],
+        ["NÃO lista admin específico",`/pessoas/lista/${id.admin}`,403],
+        ["NÃO lista atendente específico",`/pessoas/lista/${id.atendente}`,403],
+        ["NÃO lista a si mesmo",`/pessoas/lista/${idSelf}`,403],
         ["NÃO lista consultas","/consultas/lista",403],
         ["NÃO lista consulta específica",`/consultas/lista/${id.consulta}`,403]
     ]
@@ -63,10 +63,10 @@ describe("Ativar e desativar",()=>{
         ["NÃO desativa paciente específico",`/pessoas/desativar/${id.paciente}`,403],
         ["NÃO ativa a si mesmo",`/pessoas/ativar/${idSelf}`,403],
         ["NÃO desativa a si mesmo",`/pessoas/desativar/${idSelf}`,403],
-        ["ativa admin específico",`/pessoas/ativar/${id.admin}`,200],
-        ["desativa admin específico",`/pessoas/desativar/${id.admin}`,200],
-        ["ativa atendente específico",`/pessoas/ativar/${id.atendente}`,200],
-        ["desativa atendente específico",`/pessoas/desativar/${id.atendente}`,200]
+        ["NÃO ativa admin específico",`/pessoas/ativar/${id.admin}`,403],
+        ["NÃO desativa admin específico",`/pessoas/desativar/${id.admin}`,403],
+        ["NÃO ativa atendente específico",`/pessoas/ativar/${id.atendente}`,403],
+        ["NÃO desativa atendente específico",`/pessoas/desativar/${id.atendente}`,403]
     ]
     
     test.each(casos)("%s",async(_,url,status)=>{
@@ -92,28 +92,28 @@ describe("Alterações",()=>{
             "data_nascimento":"2000-01-01",
             "telefone":"51990000016"
         },403],
-        ["altera admin específico",
+        ["NÃO altera admin específico",
         `/pessoas/atualizar/${id.admin}`,{
             "cpf": "57303635084",
             "nome": "Rogério Teixeira de Barros",
             "telefone": "51988766542"
-        },200],
-        ["altera atendente específico",
+        },403],
+        ["NÃO altera atendente específico",
         `/pessoas/atualizar/${id.atendente}`,{
             "cpf": "33229115007",
             "nome": "Rafael Oliveira Santos",
             "data_nascimento": "1991-02-02",
             "telefone": "53990000007",
             "endereco": "Av. Independência, 880 - Centro"
-        },200],
-        ["altera a si mesmo",
+        },403],
+        ["NÃO altera a si mesmo",
         `/pessoas/atualizar/${idSelf}`,{
             "cpf": "06589474001",
             "nome": "Marcos Vinícius Almeida",
             "data_nascimento": "1980-01-01",
             "telefone": "51990000001",
             "endereco": "Rua das Acácias, 120 - Centro"
-        },200]
+        },403]
     ]
 
     test.each(casos)("%s",async(_,url,dados,status)=>{
@@ -125,7 +125,7 @@ describe("Alterações",()=>{
 
 describe("Inclusões",()=>{
     const casos=[
-        ["cadastra admin","/pessoas/incluir",{
+        ["NÃO cadastra admin","/pessoas/incluir",{
             "cpf":"46809872000",
             "nome":"João da Silva",
             "data_nascimento":"1980-01-01",
@@ -133,8 +133,8 @@ describe("Inclusões",()=>{
             "endereco":"Rua Assis Brasil, 120",
             "senha":"senha123",
             "funcao":"Admin"
-        },201],
-        ["cadastra atendente","/pessoas/incluir",{
+        },403],
+        ["NÃO cadastra atendente","/pessoas/incluir",{
             "cpf": "40744490057",
             "nome": "Lúcio Varela Montenegro",
             "data_nascimento": "1974-11-23",
@@ -142,7 +142,7 @@ describe("Inclusões",()=>{
             "endereco": "Rua dos Jacarandás, 903 - Vila Hípica",
             "senha": "V4r3l@#1974",
             "funcao": "Atendente"
-        },201],
+        },403],
         ["NÃO cadastra médico","/pessoas/incluir",{
             "cpf": "747.906.860-35",
             "nome": "Dr. Eduardo Martins Costa",
