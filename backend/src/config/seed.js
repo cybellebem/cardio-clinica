@@ -11,28 +11,28 @@ async function main(){
     })
 
     console.log("Inserindo admin")
-    await connection.execute(`
+    await connection.query(`
         insert into pessoas (cpf, nome, data_nascimento, telefone, endereco, senha, crm, status, funcao) values
         ('06589474001', 'Marcos Vinícius Almeida', '1980-01-01', '51990000001', 'Rua das Acácias, 120 - Centro', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Admin'),
         ('57303635084', 'Rogério Teixeira Barros', '1976-09-14', '51988766542', 'Rua das Oliveiras, 784 - Bairro Floresta', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Admin')
     `)
 
     console.log("Inserindo atendentes")
-    await connection.execute(`
+    await connection.query(`
         insert into pessoas (cpf, nome, data_nascimento, telefone, endereco, senha, crm, status, funcao) values
         ('96145395001', 'Juliana Pereira da Silva', '1990-01-01', '51990000006', 'Rua Bento Gonçalves, 45 - São Bento', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Atendente'),
         ('33229115007', 'Rafael Oliveira Santos', '1991-02-02', '51990000007', 'Av. Independência, 880 - Centro', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Atendente')
     `)
 
     console.log("Inserindo médicos")
-    await connection.execute(`
+    await connection.query(`
         insert into pessoas (cpf, nome, data_nascimento, telefone, endereco, senha, crm, status, funcao) values
         ('03209484040', 'Dr. Eduardo Martins Costa', '1975-01-01', '51990000011', 'Rua General Osório, 500 - Centro Médico', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', 'CRM10001', 'Ativo', 'Medico'),
         ('58192477088', 'Dra. Camila Ferreira Lopes', '1982-06-15', '51990000012', 'Rua Marechal Floriano, 220 - Centro Médico', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', 'CRM10002', 'Ativo', 'Medico')
     `)
 
     console.log("Inserindo pacientes")
-    await connection.execute(`
+    await connection.query(`
         insert into pessoas (cpf, nome, data_nascimento, telefone, endereco, senha, crm, status, funcao) values
         ('00482581050', 'Bruno Henrique da Rocha', '2000-01-01', '51990000016', 'Rua das Flores, 33 - Bairro Aurora', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Paciente'),
         ('91751299066', 'Larissa Gomes Ribeiro', '2001-02-02', '51990000017', 'Rua São João, 150 - Vila Nova', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', NULL, 'Ativo', 'Paciente'),
@@ -42,7 +42,7 @@ async function main(){
     `)
 
     console.log("Inserindo consultas")
-    await connection.execute(`
+    await connection.query(`
         insert into consultas (data_hora, id_paciente, id_medico, sintomas, temperatura, peso, diagnostico, tratamento, status_pagamento) values
         ('2026-05-01 08:30:00', 5, 4, 'Dor no peito e falta de ar', 36.70, 82.50, 'Hipertensão arterial', 'Uso de losartana e acompanhamento', 'Pago'),
         ('2026-05-02 10:00:00', 6, 4, 'Palpitações frequentes', 36.50, 61.20, 'Arritmia leve', 'Solicitado eletrocardiograma', 'Pendente'),

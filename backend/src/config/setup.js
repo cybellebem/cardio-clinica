@@ -10,20 +10,20 @@ async function main(){
     })
 
     console.log("Deletando banco anterior")
-    await connection.execute("drop database if exists cardio_clinica")
+    await connection.query("drop database if exists cardio_clinica")
 
     console.log("Criando banco")
-    await connection.execute(`
+    await connection.query(`
         create database if not exists cardio_clinica
         character set utf8mb4
         collate utf8mb4_unicode_ci
     `)
 
     console.log("Usando banco")
-    await connection.execute("use cardio_clinica")
+    await connection.query("use cardio_clinica")
 
     console.log("Criando tabela pessoas")
-    await connection.execute(`
+    await connection.query(`
         create table if not exists pessoas(
             id int auto_increment primary key,
             cpf varchar(20) not null unique,
@@ -39,7 +39,7 @@ async function main(){
     `)
 
     console.log("Criando tabela consultas")
-    await connection.execute(`
+    await connection.query(`
         create table if not exists consultas(
             id int auto_increment primary key,
             data_hora datetime not null,
