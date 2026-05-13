@@ -151,7 +151,7 @@ describe("Inclusões",()=>{
             "endereco": "Rua General Osório, 500 - Centro Médico",
             "senha": "senha123",
             "crm": "CRM11001",
-            "funcao": "Médico"
+            "funcao": "Medico"
         },201],
         ["cadastra paciente","/pessoas/incluir",{
             "cpf": "64958949020",

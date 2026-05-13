@@ -27,8 +27,8 @@ async function main(){
     console.log("Inserindo médicos")
     await connection.execute(`
         insert into pessoas (cpf, nome, data_nascimento, telefone, endereco, senha, crm, status, funcao) values
-        ('03209484040', 'Dr. Eduardo Martins Costa', '1975-01-01', '51990000011', 'Rua General Osório, 500 - Centro Médico', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', 'CRM10001', 'Ativo', 'Médico'),
-        ('58192477088', 'Dra. Camila Ferreira Lopes', '1982-06-15', '51990000012', 'Rua Marechal Floriano, 220 - Centro Médico', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', 'CRM10002', 'Ativo', 'Médico')
+        ('03209484040', 'Dr. Eduardo Martins Costa', '1975-01-01', '51990000011', 'Rua General Osório, 500 - Centro Médico', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', 'CRM10001', 'Ativo', 'Medico'),
+        ('58192477088', 'Dra. Camila Ferreira Lopes', '1982-06-15', '51990000012', 'Rua Marechal Floriano, 220 - Centro Médico', '$2b$10$2p8FM/0v9ENW0WEhNDtCc.aifml3pc6vj7BuUqOqJYRNNMrwiMIwS', 'CRM10002', 'Ativo', 'Medico')
     `)
 
     console.log("Inserindo pacientes")

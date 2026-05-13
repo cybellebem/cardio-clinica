@@ -29,10 +29,10 @@ class PessoaModel{
     }
 
     static async criar(dados){
-        const {cpf,nome,data,telefone,endereco,senha,funcao,crm}=dados
+        const {cpf,nome,data_nascimento,telefone,endereco,senha,funcao,crm}=dados
         const [resultado]=await db.query(
             "insert into pessoas (cpf,nome,data_nascimento,telefone,endereco,senha,funcao,crm) values (?,?,?,?,?,?,?,?)",
-            [cpf,nome,data,telefone,endereco,senha,funcao,crm]
+            [cpf,nome,data_nascimento,telefone,endereco,senha,funcao,crm]
         )
         return resultado.insertId
     }

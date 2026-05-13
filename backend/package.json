@@ -7,7 +7,7 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "test": "jest",
-    "test:verbose": "jest --verbose",
+    "supertest": "npm run setup && npm run seed && jest --verbose",
     "setup": "node src/config/setup.js",
     "seed": "node src/config/seed.js",
     "reset": "npm run setup && npm run seed"

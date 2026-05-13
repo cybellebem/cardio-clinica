@@ -36,25 +36,59 @@ function checarData(data){
 }
 
 function checarMedico(funcao,crm){
-    if(funcao==="Médico" && !crm) erro("CRM é obrigatório para cadastrar médico",400);
-    if(funcao!=="Médico" && crm) erro("CRM é um campo exclusivo para médicos",400);
+    if(funcao==="Medico" && !crm) erro("CRM é obrigatório para cadastrar médico",400);
+    if(funcao!=="Medico" && crm) erro("CRM é um campo exclusivo para médicos",400);
 }
 
-const permissoesListar={
-    Admin:["Admin","Atendente","Médico","Paciente"],
-    Atendente:["Médico","Paciente"],
-    Médico:["Paciente"]
+const funcoes={
+    Admin:{
+        listar:["Admin","Atendente","Medico","Paciente"],
+        gerenciar:["Admin","Atendente"],
+        obrigatorios:["cpf","nome","telefone","funcao","endereco","senha"]
+    },
+    Atendente:{
+        listar:["Medico","Paciente"],
+        gerenciar:["Medico","Paciente"],
+        obrigatorios:["cpf","nome","telefone","funcao","endereco","senha"]
+    },
+    Medico:{
+        listar:["Paciente"],
+        gerenciar:[],
+        obrigatorios:["cpf","nome","telefone","funcao","crm","endereco","senha"]
+    },
+    Paciente:{
+        listar:[],
+        gerenciar:[],
+        obrigatorios:["cpf","nome","telefone","funcao","data_nascimento"]
+    }
 }
 
-const permissoesGerenciar={
-    Admin:["Admin","Atendente"],
-    Atendente:["Médico","Paciente"]
-}
+// const permissoesListar={
+//     Admin:["Admin","Atendente","Medico","Paciente"],
+//     Atendente:["Medico","Paciente"],
+//     Medico:["Paciente"],
+//     Paciente:[]
+// }
+
+// const permissoesGerenciar={
+//     Admin:["Admin","Atendente"],
+//     Atendente:["Medico","Paciente"],
+//     Medico:[],
+//     Paciente:[]
+// }
+
+// const regras={
+//     Minimo:["cpf","nome","telefone","funcao"],
+//     Medico:["crm","endereco","senha"],
+//     Atendente:["endereco","senha"],
+//     Admin:["endereco","senha"],
+//     Paciente:["data_nascimento"]
+// }
 
 class PessoaService{
     static async listar(funcao){
-        const funcoesPermitidas=permissoesListar[funcao]
-        if(!funcoesPermitidas) erro("Acesso negado",403);
+        const funcoesPermitidas=funcoes[funcao]?.listar||[]
+        if(funcoesPermitidas.length===0) erro("Acesso negado",403);
         return await PessoaModel.listar(funcoesPermitidas)
     }
 
@@ -62,8 +96,12 @@ class PessoaService{
         const pessoa=await PessoaModel.buscarPorId(id)
         if(!pessoa) erro("Pessoa não encontrada",404);
 
-        const {funcao:funcaoRequisitante,id:idRequisitante}=requisitante
-        const permitido=id==idRequisitante||permissoesListar[funcaoRequisitante]?.includes(pessoa.funcao)||permissoesGerenciar[funcaoRequisitante]?.includes(pessoa.funcao)
+        const permissoesReq=funcoes[requisitante.funcao]||{}
+
+        const permitido=
+            id==requisitante.id
+            ||(permissoesReq.listar||[]).includes(pessoa.funcao)
+            ||(permissoesReq.gerenciar||[]).includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
 
         return pessoa
@@ -94,15 +132,22 @@ class PessoaService{
     static async criar(dados,funcaoReq){
         const {cpf,nome,data_nascimento,telefone,endereco,senha,crm,funcao}=dados
 
-        if(!cpf||!nome||!data_nascimento||!telefone||!endereco||!senha||!funcao) erro("Há campos obrigatórios em branco",400);
-        
+        if(!funcoes[funcao]) erro("Função inválida",400);
+
+        const faltando=funcoes[funcao].obrigatorios.filter(campo=>
+            dados[campo]===undefined||
+            dados[campo]===null||
+            dados[campo]===""
+        )
+        if(faltando.length) erro(`Há campos obrigatórios em branco: ${faltando.join(", ")}`,400)
+
         // checagem permissão
-        const permitido=permissoesGerenciar[funcaoReq]?.includes(funcao)
+        const permitido=(funcoes[funcaoReq]?.gerenciar||[]).includes(funcao)
         if(!permitido) erro("Acesso negado",403);
 
         // checagens CPF e data de nascimento
         const cpfLimpo=checarCpf(cpf)
-        checarData(data_nascimento)
+        if(data_nascimento) checarData(data_nascimento);
 
         // checagem CPF já cadastrado
         const existeCpf=await PessoaModel.buscarPorCpf(cpfLimpo)
@@ -117,7 +162,7 @@ class PessoaService{
         // objeto final
         const pessoa={
             cpf:cpfLimpo,
-            nome,data: data_nascimento,telefone,endereco,crm,funcao,
+            nome,data_nascimento,telefone,endereco,crm,funcao,
             senha:await bcrypt.hash(senha,10)
         }
         
@@ -128,7 +173,6 @@ class PessoaService{
 
     static async atualizar(id,dados,requisitante){
         const {cpf,nome,data_nascimento,telefone,endereco,senha,crm}=dados
-        const {funcao:funcaoReq,id:idReq}=requisitante
 
         if(!id) erro("ID não foi informado",400);
 
@@ -136,7 +180,10 @@ class PessoaService{
         let pessoa=await this.buscarPorId(id,requisitante)
 
         // checagem permissão
-        const permitido=id==idReq||permissoesGerenciar[funcaoReq]?.includes(pessoa.funcao)
+        const permitido=
+            id==requisitante.id||
+            ((funcoes[requisitante.funcao]||{}).gerenciar||[])
+                .includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
 
         // checagens CPF e data de nascimento
@@ -157,8 +204,8 @@ class PessoaService{
         if(dados.status) erro("Tentativa de mudança de status foi bloqueada, use a rota apropriada",403);
 
         // objeto final
-        const pessoaAtualizada={}
-        if(cpf) pessoaAtualizada.cpf=cpf;
+        const pessoaAtualizada={id:id}
+        if(cpf) pessoaAtualizada.cpf=cpfLimpo;
         if(nome) pessoaAtualizada.nome=nome;
         if(data_nascimento) pessoaAtualizada.data_nascimento=data_nascimento
         if(telefone) pessoaAtualizada.telefone=telefone
@@ -168,16 +215,14 @@ class PessoaService{
         // se necessário atualizar senha
         if(typeof senha==="string" && senha.length>0) pessoaAtualizada.senha=await bcrypt.hash(senha,10);
 
-        pessoa={...pessoa,...pessoaAtualizada}
-
-        await PessoaModel.atualizar(pessoa)
-        return pessoa
+        await PessoaModel.atualizar(pessoaAtualizada)
+        return pessoaAtualizada
     }
 
     static async ativar(id,requisitante){
         if(id==requisitante.id) erro("Não pode ativar seu próprio cadastro",403);
         const pessoa=await this.buscarPorId(id,requisitante)
-        const permitido=permissoesGerenciar[requisitante.funcao]?.includes(pessoa.funcao)
+        const permitido=(funcoes[requisitante.funcao]?.gerenciar||[]).includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
         await PessoaModel.ativar(id)
     }
@@ -185,7 +230,7 @@ class PessoaService{
     static async desativar(id,requisitante){
         if(id==requisitante.id) erro("Não pode desativar seu próprio cadastro",403);
         const pessoa=await this.buscarPorId(id,requisitante)
-        const permitido=permissoesGerenciar[requisitante.funcao]?.includes(pessoa.funcao)
+        const permitido=(funcoes[requisitante.funcao]?.gerenciar||[]).includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
         await PessoaModel.desativar(id)
     }

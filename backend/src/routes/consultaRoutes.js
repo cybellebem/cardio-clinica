@@ -5,8 +5,8 @@ const {authToken,authRole}=require("../middlewares/authMiddleware")
 const router=express.Router()
 
 // consultas
-router.get("/lista",authToken,authRole("Médico"),ConsultaController.listarConsultas)
-router.get("/lista/:id",authToken,authRole("Médico"),ConsultaController.listarConsultaPorId)
-router.post("/incluir",authToken,authRole("Médico"),ConsultaController.incluirConsulta)
+router.get("/lista",authToken,authRole("Medico"),ConsultaController.listarConsultas)
+router.get("/lista/:id",authToken,authRole("Medico"),ConsultaController.listarConsultaPorId)
+router.post("/incluir",authToken,authRole("Medico"),ConsultaController.incluirConsulta)
 
 module.exports=router

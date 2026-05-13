@@ -28,13 +28,13 @@ async function main(){
             id int auto_increment primary key,
             cpf varchar(20) not null unique,
             nome varchar(100) not null,
-            data_nascimento date not null,
+            data_nascimento date,
             telefone varchar(50) not null,
-            endereco varchar(200) not null,
+            endereco varchar(200),
             senha varchar(255) not null,
             crm varchar(20) unique,
             status enum('Ativo','Inativo') default 'Ativo',
-            funcao enum('Atendente','Admin','Paciente','Médico') not null
+            funcao enum('Atendente','Admin','Paciente','Medico') not null
         )
     `)
 

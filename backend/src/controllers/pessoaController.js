@@ -2,6 +2,7 @@ const PessoaService=require("../services/pessoaService")
 
 class PessoaController{
     static async listarPessoas(req,res){
+        console.log(req.pessoa)
         try{
             const resultado=await PessoaService.listar(req.pessoa.funcao)
             res.status(200).json({pessoas:resultado})

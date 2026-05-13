@@ -1,0 +1,35 @@
+@login=http://localhost:3000/auth/login
+@pessoa=http://localhost:3000/pessoas
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg2NDE2MjEsImV4cCI6MTc3ODY0NTIyMX0.BogkKj6Lv60QbJShiLZCOrkmuUPoGUcAjjsZ9JQqtC8
+@tokenPaciente=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZnVuY2FvIjoiUGFjaWVudGUiLCJpYXQiOjE3Nzg2NDExNTgsImV4cCI6MTc3ODY0NDc1OH0.rBXYHuQkIDgH6NqCObB-ka5dKxrohD0wiMc-M6A2jk4
+
+### login admin
+POST {{login}}
+Content-Type: application/json
+
+{"cpf":"06589474001","senha":"senha123"}
+
+### login paciente
+POST {{login}}
+Content-Type: application/json
+
+{"cpf":"00482581050","senha":"senha123"}
+
+### cria atendente
+POST {{pessoa}}/incluir
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{
+    "cpf": "41336691000",
+    "nome": "Luciana Montenegro",
+    "data_nascimento": "1989-11-21",
+    "telefone": "88982344310",
+    "endereco": "Rua das Girafas, 1146 - Tempestade",
+    "senha": "senha123",
+    "funcao": "Atendente"
+}
+
+### paciente lista usuários
+GET {{pessoa}}/lista
+Authorization: Bearer {{tokenPaciente}}
