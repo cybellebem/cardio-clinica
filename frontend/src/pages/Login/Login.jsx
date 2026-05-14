@@ -1,17 +1,12 @@
 import background from "../../assets/freq-cardiaca.jpeg";
-import logo from "../../assets/logo.jpg";
+import logo from "../../assets/logo.jpeg";
 import "./Login.css";
 
 function Login() {
   return (
     <div className="login-container">
-      
-      <img
-        src={background}
-        className="background"
-        alt="Background"
-      />
-      
+      <img src={background} className="background" alt="Background" />
+
       <div className="overlay"></div>
 
       <div className="login-card">
