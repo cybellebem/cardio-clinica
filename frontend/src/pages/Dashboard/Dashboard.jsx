@@ -1,19 +1,30 @@
+import { useState } from "react";
+
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 
 import "./Dashboard.css";
 
 function Dashboard() {
+  const [collapsed, setCollapsed] = useState(false);
+
+  function toggleSidebar() {
+    setCollapsed(!collapsed);
+  }
+
   return (
-    <div className="dashboard-container">
+    <div
+      className={
+        collapsed ? "dashboard-container collapsed" : "dashboard-container"
+      }
+    >
       {/* SIDEBAR */}
       <Sidebar />
 
       {/* ÁREA DIREITA */}
       <div className="content-area">
         {/* HEADER */}
-        <Header />
-
+        <Header toggleSidebar={toggleSidebar} collapsed={collapsed} />
         {/* CONTEÚDO */}
         <main className="main-content">
           {/* CONSULTAS */}

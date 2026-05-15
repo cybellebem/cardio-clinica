@@ -6,49 +6,71 @@ import {
   FaUsers,
 } from "react-icons/fa";
 
+import { Link, useLocation } from "react-router-dom";
+
 function Sidebar() {
+  const location = useLocation();
+
+  function isActive(path) {
+    return location.pathname === path ? "active" : "";
+  }
+
   return (
     <aside className="sidebar">
       <nav className="menu">
         <ul>
-          <li className="active">
-            <span className="menu-icon">
-              <FaHome />
-            </span>
+          {/* DASHBOARD */}
+          <li className={isActive("/dashboard")}>
+            <Link to="/dashboard">
+              <span className="menu-icon">
+                <FaHome />
+              </span>
 
-            <span className="menu-text">Dashboard</span>
+              <span className="menu-text">Dashboard</span>
+            </Link>
           </li>
 
-          <li>
-            <span className="menu-icon">
-              <FaUserMd />
-            </span>
+          {/* MÉDICOS */}
+          <li className={isActive("/medicos")}>
+            <Link to="/medicos">
+              <span className="menu-icon">
+                <FaUserMd />
+              </span>
 
-            <span className="menu-text">Gerenciar Médicos</span>
+              <span className="menu-text">Gerenciar Médicos</span>
+            </Link>
           </li>
 
-          <li>
-            <span className="menu-icon">
-              <FaUsers />
-            </span>
+          {/* FUNCIONÁRIOS */}
+          <li className={isActive("/funcionarios")}>
+            <Link to="/funcionarios">
+              <span className="menu-icon">
+                <FaUsers />
+              </span>
 
-            <span className="menu-text">Gerenciar Funcionários</span>
+              <span className="menu-text">Gerenciar Funcionários</span>
+            </Link>
           </li>
 
-          <li>
-            <span className="menu-icon">
-              <FaHospitalUser />
-            </span>
+          {/* PACIENTES */}
+          <li className={isActive("/pacientes")}>
+            <Link to="/pacientes">
+              <span className="menu-icon">
+                <FaHospitalUser />
+              </span>
 
-            <span className="menu-text">Gerenciar Pacientes</span>
+              <span className="menu-text">Gerenciar Pacientes</span>
+            </Link>
           </li>
         </ul>
       </nav>
 
       <button className="new-consultation">
-        <FaPlus />
+        <span className="button-icon">
+          <FaPlus />
+        </span>
 
-        <span>Nova consulta</span>
+        <span>Nova Consulta</span>
       </button>
     </aside>
   );
