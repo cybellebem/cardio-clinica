@@ -1,0 +1,16 @@
+.container {
+    display: grid;
+    place-items: center;
+}
+
+.error {
+    display: grid;
+    gap: 25px;
+    padding: 50px 0;
+    color: #ff5555;
+}
+
+.error h1 {
+    font-family: myFont;
+    font-size: 3rem;
+}

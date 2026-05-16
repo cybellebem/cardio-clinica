@@ -1,8 +1,44 @@
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../auth/AuthContext";
 import background from "../../assets/freq-cardiaca.jpeg";
 import logo from "../../assets/logo.jpeg";
+import FormInput from "../../components/FormInput";
+import Button from "../../components/Button";
 import "./Login.css";
 
 function Login() {
+  const {login}=useAuth()
+  const navigate=useNavigate()
+  const location=useLocation()
+
+  const [form,setForm]=useState({cpf:"",senha:""})
+  const [error,setError]=useState("")
+  const [loading,setLoading]=useState(false)
+
+  function updateField(e){
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+    
+    try{
+      await login(form)
+      navigate(location.state?.from?.pathname||"/dashboard",{replace:true})
+    }catch(error){
+      console.error(error)
+      setError("Credenciais inválidas")
+    }finally{
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="login-container">
       <img src={background} className="background" alt="Background" />
@@ -24,16 +60,28 @@ function Login() {
           </div>
         </div>
 
-        <form className="login-form">
-          <label>Nome de usuário:</label>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <FormInput
+            label="CPF:"
+            type="text"
+            name="cpf"
+            value={form.cpf}
+            placeholder="123.456.789.10"
+            onChange={updateField}
+            required
+          />
 
-          <input type="text" placeholder="Digite seu usuário" />
+          <FormInput
+            label="Senha:"
+            type="password"
+            name="senha"
+            value={form.senha}
+            placeholder="********"
+            onChange={updateField}
+            required
+          />
 
-          <label>Senha:</label>
-
-          <input type="password" placeholder="Digite sua senha" />
-
-          <button type="submit">ENTRAR</button>
+          <Button type="submit" disabled={loading}>{loading ? "Entrando..." : "Entrar"}</Button>
 
           <a href="#">Esqueci minha senha</a>
         </form>
