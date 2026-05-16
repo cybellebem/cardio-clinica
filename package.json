@@ -1,0 +1,17 @@
+{
+  "name": "cardio-clinica",
+  "version": "1.0.0",
+  "homepage": "https://github.com/cybellebem/cardio-clinica#readme",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "banco": "npm --workspace backend run reset",
+    "backend": "npm --workspace backend run dev",
+    "frontend": "npm --workspace frontend run dev"
+  }
+}
