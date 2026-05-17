@@ -23,24 +23,16 @@ export const router=createBrowserRouter([
   },
   {
     path:"/",
-    element:<RootLayout/>,
+    element:(
+      <RequireAuth>
+        <RootLayout/>
+      </RequireAuth>
+    ),
     children:[
-      {index:true,element:(
-        <RequireAuth>
-          <Dashboard/>
-        </RequireAuth>
-      )},
-      {path:"dashboard",element:(
-        <RequireAuth>
-          <Dashboard/>
-        </RequireAuth>
-      )},
-      {path:"pessoas/:funcao",element:(
-        <RequireAuth>
-          <PessoasWrapper/>
-        </RequireAuth>
-      )},
-      {path:"*",element:<NotFound/>}
+      {index:true,element:<Dashboard/>},
+      {path:"dashboard",element:<Dashboard/>},
+      {path:"pessoas/:funcao",element:<PessoasWrapper/>},
     ]
-  }
+  },
+  {path:"*",element:<NotFound/>}
 ])

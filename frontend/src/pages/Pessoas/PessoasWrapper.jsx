@@ -1,6 +1,7 @@
-import { Navigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import RequirePerm from "../../auth/RequirePerm"
 import Pessoas from "./Pessoas"
+import NotFound from "../NotFound/NotFound"
 
 export default function PessoasWrapper(){
     const {funcao}=useParams()
@@ -13,7 +14,7 @@ export default function PessoasWrapper(){
     }
 
     const target=mapping[funcao?.toLowerCase()]
-    if(!target) return <Navigate to="/forbidden" replace/>
+    if(!target) return <NotFound/>
 
     return(
         <RequirePerm action="listar" target={target}>

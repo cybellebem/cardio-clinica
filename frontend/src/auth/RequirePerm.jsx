@@ -36,7 +36,7 @@ export default function RequirePerm({action,target,children}){
             ? regras?.gerenciar?.includes(target)
             : false
 
-    if(!permitido) return <Navigate to="/forbidden" replace/>;
+    // if(!permitido) return <Navigate to="/forbidden" replace/>;
 
     return children
 }
