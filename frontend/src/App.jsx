@@ -5,16 +5,21 @@ import RootLayout from "./layouts/RootLayout"
 // protegidas
 import Dashboard from "./pages/Dashboard/Dashboard"
 import Pessoas from "./pages/Pessoas/Pessoas"
+import PessoasWrapper from "./pages/Pessoas/PessoasWrapper"
 
 // públicas
 import Login from "./pages/Login/Login"
 import NotFound from "./pages/NotFound/NotFound"
-import PessoasWrapper from "./pages/Pessoas/PessoasWrapper"
+import Forbidden from "./pages/Forbidden/Forbidden"
 
 export const router=createBrowserRouter([
   {
     path:"/login",
     element:<Login/>
+  },
+  {
+    path:"/forbidden",
+    element:<Forbidden/>
   },
   {
     path:"/",

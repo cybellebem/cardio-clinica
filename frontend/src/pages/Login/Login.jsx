@@ -7,7 +7,7 @@ import FormInput from "../../components/FormInput";
 import Button from "../../components/Button";
 import "./Login.css";
 
-function Login() {
+export default function Login() {
   const {login}=useAuth()
   const navigate=useNavigate()
   const location=useLocation()
@@ -89,5 +89,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

@@ -245,6 +245,7 @@ textarea {
     justify-content: center;
   }
 }
+
 /* ==================================================
    SIDEBAR
 ================================================== */
@@ -568,9 +569,21 @@ th,
 td {
   padding: 15px;
 
-  text-align: left;
-
   border-bottom: 1px solid #ddd;
+}
+
+.left {
+  text-align: left;
+}
+
+td,
+th {
+  text-align: center;
+}
+
+td:not(:last-child),
+th:not(:last-child) {
+  border-right: 1px solid black;
 }
 
 tbody tr:hover {
@@ -657,4 +670,20 @@ tbody tr:hover {
   font-size: 16px;
 
   cursor: pointer;
+}
+
+/* PÁGINAS DE ERRO */
+
+.error h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.error h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.error {
+  color: darkred;
 }

@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom"
 import { useAuth } from "./AuthContext"
 
-const funcoes={
+export const funcoes={
     Admin:{
         listar:["Admin","Atendente","Medico","Paciente"],
         gerenciar:["Admin","Atendente"],
