@@ -1,17 +1,15 @@
 import { createBrowserRouter } from "react-router-dom"
 import RequireAuth from "./auth/RequireAuth"
-import RequireRole from "./auth/RequireRole"
 import RootLayout from "./layouts/RootLayout"
 
 // protegidas
 import Dashboard from "./pages/Dashboard/Dashboard"
-import Medicos from "./pages/Medicos/Medicos"
-import Funcionarios from "./pages/Funcionarios/Funcionarios"
-import Pacientes from "./pages/Pacientes/Pacientes"
+import Pessoas from "./pages/Pessoas/Pessoas"
 
 // públicas
 import Login from "./pages/Login/Login"
 import NotFound from "./pages/NotFound/NotFound"
+import PessoasWrapper from "./pages/Pessoas/PessoasWrapper"
 
 export const router=createBrowserRouter([
   {
@@ -22,27 +20,19 @@ export const router=createBrowserRouter([
     path:"/",
     element:<RootLayout/>,
     children:[
-      {index:true,element:<Dashboard/>},
-      {path:"dashboard",element:(<RequireAuth><Dashboard/></RequireAuth>)},
-      {path:"medicos",element:(
+      {index:true,element:(
         <RequireAuth>
-          <RequireRole funcao="Medico">
-            <Medicos/>
-          </RequireRole>
+          <Dashboard/>
         </RequireAuth>
       )},
-      {path:"funcionarios",element:(
+      {path:"dashboard",element:(
         <RequireAuth>
-          <RequireRole funcao="Admin">
-            <Funcionarios/>
-          </RequireRole>
+          <Dashboard/>
         </RequireAuth>
       )},
-      {path:"pacientes",element:(
+      {path:"pessoas/:funcao",element:(
         <RequireAuth>
-          <RequireRole funcao="Atendente">
-            <Pacientes/>
-          </RequireRole>
+          <PessoasWrapper/>
         </RequireAuth>
       )},
       {path:"*",element:<NotFound/>}

@@ -4,7 +4,6 @@
   "homepage": "https://github.com/cybellebem/cardio-clinica#readme",
   "license": "ISC",
   "author": "",
-  "type": "module",
   "workspaces": [
     "backend",
     "frontend"

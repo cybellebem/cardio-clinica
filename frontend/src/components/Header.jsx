@@ -1,8 +1,10 @@
 import logo from "../assets/logo2.png";
 
 import { FaBars, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../auth/AuthContext";
 
 function Header({ toggleSidebar, collapsed }) {
+  const {logout}=useAuth()
   return (
     <header className="header">
       <div className="header-left">
@@ -25,7 +27,7 @@ function Header({ toggleSidebar, collapsed }) {
           <span>Administrador</span>
         </div>
 
-        <button className="logout-button" type="button">
+        <button className="logout-button" type="button" onClick={logout}>
           <FaSignOutAlt />
           <span>Sair</span>
         </button>

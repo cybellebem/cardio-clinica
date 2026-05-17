@@ -12,7 +12,7 @@ function Sidebar() {
   const location = useLocation();
 
   function isActive(path) {
-    return location.pathname === path ? "active" : "";
+    return location.pathname.startsWith(path) ? "active" : "";
   }
 
   return (
@@ -25,40 +25,46 @@ function Sidebar() {
               <span className="menu-icon">
                 <FaHome />
               </span>
-
               <span className="menu-text">Dashboard</span>
             </Link>
           </li>
 
           {/* MÉDICOS */}
-          <li className={isActive("/medicos")}>
-            <Link to="/medicos">
+          <li className={isActive("/pessoas/medicos")}>
+            <Link to="/pessoas/medicos">
               <span className="menu-icon">
                 <FaUserMd />
               </span>
-
               <span className="menu-text">Gerenciar Médicos</span>
             </Link>
           </li>
 
           {/* FUNCIONÁRIOS */}
-          <li className={isActive("/funcionarios")}>
-            <Link to="/funcionarios">
+          <li className={isActive("/pessoas/admins")}>
+            <Link to="/pessoas/admins">
               <span className="menu-icon">
                 <FaUsers />
               </span>
+              <span className="menu-text">Gerenciar Administradores</span>
+            </Link>
+          </li>
 
-              <span className="menu-text">Gerenciar Funcionários</span>
+          {/* ATENDENTES */}
+          <li className={isActive("/pessoas/atendentes")}>
+            <Link to="/pessoas/atendentes">
+              <span className="menu-icon">
+                <FaUsers />
+              </span>
+              <span className="menu-text">Gerenciar Atendentes</span>
             </Link>
           </li>
 
           {/* PACIENTES */}
-          <li className={isActive("/pacientes")}>
-            <Link to="/pacientes">
+          <li className={isActive("/pessoas/pacientes")}>
+            <Link to="/pessoas/pacientes">
               <span className="menu-icon">
                 <FaHospitalUser />
               </span>
-
               <span className="menu-text">Gerenciar Pacientes</span>
             </Link>
           </li>
