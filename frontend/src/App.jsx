@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Funcionarios from "./pages/Funcionarios/Funcionarios";
+import Dashboard from "./pages/Dashboard";
+import Funcionarios from "./pages/Funcionarios";
 import Login from "./pages/Login/Login";
-import Medicos from "./pages/Medicos/Medicos";
-import Pacientes from "./pages/Pacientes/Pacientes";
+import Medicos from "./pages/Medicos";
+import Pacientes from "./pages/Pacientes";
 
 function App() {
   return (

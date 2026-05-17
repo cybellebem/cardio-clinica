@@ -22,7 +22,7 @@ function Header({ toggleSidebar, collapsed }) {
       <div className="user-area">
         <div className="user-info">
           <FaUserCircle className="user-icon" />
-          <span>Administrador</span>
+          <span></span>
         </div>
 
         <button className="logout-button" type="button">

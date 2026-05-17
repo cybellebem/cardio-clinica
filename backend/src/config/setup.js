@@ -1,29 +1,29 @@
-const mysql=require("mysql2/promise")
+const mysql = require("mysql2/promise");
 
-require("dotenv").config({quiet:true})
+require("dotenv").config({ quiet: true });
 
-async function main(){
-    const connection=await mysql.createConnection({
-        host:process.env.DB_HOST,
-        user:process.env.DB_USER,
-        password:process.env.DB_PASSWORD,
-    })
+async function main() {
+  const connection = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+  });
 
-    console.log("Deletando banco anterior")
-    await connection.query("drop database if exists cardio_clinica")
+  console.log("Deletando banco anterior");
+  await connection.query("drop database if exists cardio_clinica");
 
-    console.log("Criando banco")
-    await connection.query(`
+  console.log("Criando banco");
+  await connection.query(`
         create database if not exists cardio_clinica
         character set utf8mb4
         collate utf8mb4_unicode_ci
-    `)
+    `);
 
-    console.log("Usando banco")
-    await connection.query("use cardio_clinica")
+  console.log("Usando banco");
+  await connection.query("use cardio_clinica");
 
-    console.log("Criando tabela pessoas")
-    await connection.query(`
+  console.log("Criando tabela pessoas");
+  await connection.query(`
         create table if not exists pessoas(
             id int auto_increment primary key,
             cpf varchar(20) not null unique,
@@ -36,10 +36,10 @@ async function main(){
             status enum('Ativo','Inativo') default 'Ativo',
             funcao enum('Atendente','Admin','Paciente','Medico') not null
         )
-    `)
+    `);
 
-    console.log("Criando tabela consultas")
-    await connection.query(`
+  console.log("Criando tabela consultas");
+  await connection.query(`
         create table if not exists consultas(
             id int auto_increment primary key,
             data_hora datetime not null,
@@ -54,13 +54,13 @@ async function main(){
             foreign key (id_paciente) references pessoas(id),
             foreign key (id_medico) references pessoas(id)
         )
-    `)
+    `);
 
-    console.log("Banco criado com sucesso")
+  console.log("Banco criado com sucesso");
 
-    await connection.end()
+  await connection.end();
 }
 
 main()
-    .then(()=>console.log("Finalizado"))
-    .catch((error)=>console.error(error))
+  .then(() => console.log("Finalizado"))
+  .catch((error) => console.error(error));

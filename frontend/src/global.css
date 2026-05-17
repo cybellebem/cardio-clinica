@@ -1,6 +1,6 @@
-/* ==================================================
+/* ========================================
    VARIABLES
-================================================== */
+======================================== */
 
 :root {
   --primary: #00558f;
@@ -9,104 +9,99 @@
 
   --background: #a7cbe8;
 
-  --text-light: #ffffff;
+  --text-light: #fff;
   --text-dark: #1f2937;
 
   --sidebar-width: 290px;
   --header-height: 90px;
 
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-
   --transition: 0.25s ease;
 }
 
-/* ==================================================
+/* ========================================
    RESET
-================================================== */
+======================================== */
 
-*,
-*::before,
-*::after {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 html {
-  font-size: 16px;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
-  font-family: Arial, sans-serif;
-  color: #1f2937;
-  -webkit-font-smoothing: antialiased;
   overflow: hidden;
+
+  font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+
   background: var(--background);
+  color: var(--text-dark);
 }
 
 button,
 input,
 textarea {
-  font-family: inherit;
+  font: inherit;
 }
 
-/* ==================================================
-   LOGO
-================================================== */
+/* ========================================
+   LAYOUT
+======================================== */
 
-.logo-area {
+.dashboard-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  width: 100%;
+  height: 100vh;
 }
 
-.logo-area img {
-  width: 70px;
-  height: 70px;
+.dashboard-container.collapsed .sidebar {
+  width: 0;
 
-  object-fit: cover;
-
-  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* ==================================================
-   HEADER
-================================================== */
+.content-area {
+  display: flex;
+  flex-direction: column;
 
-/* ==================================================
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ========================================
    HEADER
-================================================== */
+======================================== */
 
 .header {
-  grid-area: header;
-
   height: var(--header-height);
 
+  padding: 0 30px;
+
   background: var(--primary);
+  color: var(--text-light);
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 0 30px;
-
-  color: white;
-
   box-shadow: var(--shadow);
 }
 
-/* ESQUERDA */
-
-.header-left {
+.header-left,
+.user-area,
+.user-info {
   display: flex;
   align-items: center;
-
   gap: 18px;
 }
-
-/* MENU BUTTON */
 
 /* MENU TOGGLE */
 
@@ -117,43 +112,25 @@ textarea {
   border: none;
   border-radius: 10px;
 
-  background: rgba(255, 255, 255, 0.1);
-
+  background: rgba(255, 255, 255, 0.12);
   color: white;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 
   font-size: 22px;
 
   cursor: pointer;
 
-  transition:
-    background 0.3s ease,
-    transform 0.3s ease;
+  transition: var(--transition);
 }
 
 .menu-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* ÍCONE ROTACIONANDO */
-
-.menu-toggle svg {
-  transition: transform 0.35s ease;
-}
-
-.menu-toggle.collapsed svg {
-  transform: rotate(180deg);
-}
-
 /* LOGO */
-
-.logo-area {
-  display: flex;
-  align-items: center;
-}
 
 .logo-area img {
   width: 60px;
@@ -162,32 +139,11 @@ textarea {
   object-fit: contain;
 }
 
-/* USER AREA */
-
-.user-area {
-  display: flex;
-  align-items: center;
-
-  gap: 20px;
-}
-
-/* USER INFO */
-
-.user-info {
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  font-size: 16px;
-  font-weight: 600;
-}
+/* USER */
 
 .user-icon {
-  font-size: 32px;
+  font-size: 30px;
 }
-
-/* LOGOUT */
 
 .logout-button {
   height: 42px;
@@ -198,22 +154,17 @@ textarea {
   border-radius: 10px;
 
   background: rgba(255, 255, 255, 0.12);
-
   color: white;
 
   display: flex;
   align-items: center;
-
   gap: 10px;
 
-  font-size: 15px;
   font-weight: 600;
 
   cursor: pointer;
 
-  transition:
-    background var(--transition),
-    transform var(--transition);
+  transition: var(--transition);
 }
 
 .logout-button:hover {
@@ -222,37 +173,14 @@ textarea {
   transform: translateY(-2px);
 }
 
-/* RESPONSIVO */
-
-@media (max-width: 768px) {
-  .header {
-    padding: 0 18px;
-  }
-
-  .user-info span {
-    display: none;
-  }
-
-  .logout-button span {
-    display: none;
-  }
-
-  .logout-button {
-    width: 42px;
-
-    padding: 0;
-
-    justify-content: center;
-  }
-}
-/* ==================================================
+/* ========================================
    SIDEBAR
-================================================== */
+======================================== */
 
 .sidebar {
-  grid-area: sidebar;
-
   width: var(--sidebar-width);
+
+  padding: 20px 0;
 
   background: linear-gradient(180deg, var(--primary), var(--primary-light));
 
@@ -260,16 +188,16 @@ textarea {
   flex-direction: column;
   justify-content: space-between;
 
-  padding: 20px 0;
+  overflow: hidden;
 
   box-shadow: var(--shadow);
 
-  overflow: hidden;
+  transition: 0.3s ease;
 }
 
 /* MENU */
 
-.sidebar .menu ul {
+.menu ul {
   list-style: none;
 
   display: flex;
@@ -278,48 +206,45 @@ textarea {
   gap: 6px;
 }
 
-/* ITEM */
+.menu li {
+  overflow: hidden;
+}
 
-.sidebar .menu li {
-  display: flex;
-  align-items: center;
-
+.menu li a {
   width: 100%;
 
+  padding: 18px 20px;
+
   color: var(--text-light);
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
 
   font-size: 18px;
   font-weight: 600;
 
-  cursor: pointer;
-
-  transition:
-    background var(--transition),
-    padding-left var(--transition);
-
-  white-space: nowrap;
-
-  overflow: hidden;
+  transition: var(--transition);
 }
 
-.sidebar .menu li a {
-  display: flex;
-  align-items: center;
+.menu li:hover a {
+  padding-left: 28px;
 
-  width: 100%;
-  height: 100%;
-
-  padding: 18px 20px;
-
-  text-decoration: none;
-
-  color: inherit;
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* ÍCONE */
+.menu .active a {
+  background: rgba(255, 255, 255, 0.2);
 
-.sidebar .menu-icon {
+  border-left: 4px solid white;
+}
+
+/* MENU ICON */
+
+.menu-icon {
   min-width: 28px;
+
+  margin-right: 14px;
 
   display: flex;
   justify-content: center;
@@ -327,224 +252,113 @@ textarea {
 
   font-size: 22px;
 
-  margin-right: 14px;
-
   flex-shrink: 0;
 }
 
-/* TEXTO */
-
-.sidebar .menu-text {
-  flex: 1;
-
+.menu-text {
   overflow: hidden;
-  text-overflow: ellipsis;
 
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* HOVER */
+/* ========================================
+   BUTTONS
+======================================== */
 
-.sidebar .menu li:hover {
-  background: rgba(255, 255, 255, 0.15);
-  padding-left: 28px;
-}
-
-/* ACTIVE */
-
-.sidebar .menu .active {
-  background: rgba(255, 255, 255, 0.2);
-  border-left: 4px solid white;
-}
-
-/* RESPONSIVO */
-
-@media (max-width: 768px) {
-  .sidebar {
-    width: 220px;
-  }
-
-  .sidebar .menu li {
-    font-size: 16px;
-    padding: 16px 18px;
-  }
-
-  .sidebar .menu-icon {
-    font-size: 20px;
-    min-width: 24px;
-    margin-right: 12px;
-  }
-}
-
-/* BUTTON  NOVA CONSULTA */
-
-.new-consultation {
-  width: calc(100% - 32px);
-
-  margin: 16px;
-  height: 56px;
+.new-consultation,
+.search-button,
+.new-button {
+  height: 50px;
 
   border: none;
-  border-radius: 16px;
+  border-radius: 14px;
 
-  background: var(--primary-dark);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
 
   color: white;
 
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
 
-  gap: 12px;
-
-  font-size: 17px;
   font-weight: 700;
 
   cursor: pointer;
 
   box-shadow: var(--shadow);
 
-  transition:
-    background var(--transition),
-    transform var(--transition),
-    box-shadow var(--transition);
-
-  flex-shrink: 0;
+  transition: var(--transition);
 }
 
-/* HOVER */
-
-.new-consultation:hover {
-  background: #00365a;
-
+.new-consultation:hover,
+.search-button:hover,
+.new-button:hover {
   transform: translateY(-2px);
 
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
 }
 
-/* CLICK */
+/* SIDEBAR BUTTON */
 
-.new-consultation:active {
-  transform: scale(0.98);
+.new-consultation {
+  width: calc(100% - 32px);
+
+  margin: 16px;
 }
 
-/* ÍCONE */
+/* TABLE BUTTONS */
 
-.new-consultation .button-icon {
+.table-header {
+  margin-bottom: 20px;
+
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 
-  font-size: 18px;
-
-  flex-shrink: 0;
+  gap: 20px;
 }
 
-/* TEXTO */
+.table-actions {
+  margin-left: auto;
 
-.new-consultation span:last-child {
-  white-space: nowrap;
+  display: flex;
+  gap: 14px;
 }
 
-/* RESPONSIVO */
+.search-button,
+.new-button {
+  min-width: 160px;
 
-@media (max-width: 768px) {
-  .new-consultation {
-    height: 52px;
+  padding: 0 22px;
 
-    font-size: 15px;
-
-    border-radius: 14px;
-  }
-
-  .new-consultation .button-icon {
-    font-size: 16px;
-  }
+  border-radius: 999px;
 }
 
-/* ==================================================
-   CONTENT
-================================================== */
+/* ========================================
+   MAIN CONTENT
+======================================== */
 
 .main-content {
-  grid-area: content;
+  padding: 32px;
 
   overflow-y: auto;
-
-  padding: 32px;
 }
-
-/* SCROLLBAR */
 
 .main-content::-webkit-scrollbar {
   width: 10px;
 }
 
 .main-content::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-
   border-radius: 10px;
+
+  background: #cbd5e1;
 }
 
-/* ==================================================
-   CONTENT AREA
-================================================== */
-
-.content-area {
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  height: 100%;
-}
-
-/* ==================================================
-   RESPONSIVE
-================================================== */
-
-@media (max-width: 768px) {
-  .dashboard-container {
-    grid-template-areas:
-      "header"
-      "content";
-
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: fixed;
-
-    top: var(--header-height);
-    left: 0;
-
-    width: var(--sidebar-width);
-    height: calc(100vh - var(--header-height));
-
-    z-index: 100;
-  }
-
-  .header {
-    padding: 0 20px;
-  }
-
-  .header h1 {
-    font-size: 1.5rem;
-  }
-
-  .main-content {
-    padding: 20px;
-  }
-
-  .sidebar .menu li {
-    font-size: 18px;
-  }
-
-  .new-consultation {
-    font-size: 16px;
-  }
-}
-
-/* TABELAS */
+/* ========================================
+   TABLE
+======================================== */
 
 table {
   width: 100%;
@@ -555,11 +369,11 @@ table {
 
   margin-bottom: 40px;
 
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
 }
 
 thead {
-  background: #004f85;
+  background: var(--primary-dark);
 
   color: white;
 }
@@ -577,84 +391,147 @@ tbody tr:hover {
   background: #f3f3f3;
 }
 
-/* TITULO TABELA */
+/* ========================================
+   TITLES
+======================================== */
 
 .table h2,
 .summary h2 {
-  font-size: 36px;
-
   margin-bottom: 20px;
+
+  font-size: 36px;
 
   color: #333;
 }
 
-/* COLAPSO */
+/* ========================================
+   CARDS
+======================================== */
 
-.dashboard-container.collapsed {
-  grid-template-columns: 0 1fr;
-}
-
-/* SIDEBAR */
-
-.sidebar {
-  transition:
-    width 0.3s ease,
-    opacity 0.3s ease,
-    transform 0.3s ease;
-}
-
-/* SIDEBAR FECHADA */
-
-.dashboard-container.collapsed .sidebar {
-  width: 0;
-
-  opacity: 0;
-
-  pointer-events: none;
-}
-
-/* ÁREA DIREITA */
-
-.content-area {
+.cards {
   display: flex;
-  flex-direction: column;
-
-  width: 100%;
+  gap: 25px;
 }
 
-/* HEADER LEFT */
+.card {
+  flex: 1;
 
-.header-left {
+  padding: 25px;
+
+  background: white;
+
+  border-radius: 10px;
+
+  box-shadow: var(--shadow);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+}
+
+.card h1 {
+  margin-bottom: 20px;
+
+  font-size: 52px;
+}
+
+/* ========================================
+   CHART
+======================================== */
+
+.chart {
+  height: 140px;
+
   display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-/* USER INFO */
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.user-icon {
-  font-size: 28px;
-}
-
-/* LOGOUT */
-
-.logout-button {
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 8px;
+}
 
-  border: none;
-  background: transparent;
+.chart div {
+  flex: 1;
 
-  color: white;
+  border-radius: 3px 3px 0 0;
 
-  font-size: 16px;
+  background: var(--primary);
+}
 
-  cursor: pointer;
+.chart div:nth-child(1) {
+  height: 70%;
+}
+.chart div:nth-child(2) {
+  height: 55%;
+}
+.chart div:nth-child(3) {
+  height: 48%;
+}
+.chart div:nth-child(4) {
+  height: 62%;
+}
+.chart div:nth-child(5) {
+  height: 80%;
+}
+.chart div:nth-child(6) {
+  height: 92%;
+}
+.chart div:nth-child(7) {
+  height: 45%;
+}
+.chart div:nth-child(8) {
+  height: 75%;
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .header {
+    padding: 0 18px;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .menu li a {
+    padding: 16px 18px;
+
+    font-size: 16px;
+  }
+
+  .menu-icon {
+    min-width: 24px;
+
+    margin-right: 12px;
+
+    font-size: 20px;
+  }
+
+  .user-info span,
+  .logout-button span {
+    display: none;
+  }
+
+  .logout-button {
+    width: 42px;
+
+    padding: 0;
+
+    justify-content: center;
+  }
+
+  .table-header,
+  .table-actions,
+  .cards {
+    flex-direction: column;
+  }
+
+  .search-button,
+  .new-button {
+    width: 100%;
+  }
 }
