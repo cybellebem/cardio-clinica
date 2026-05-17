@@ -6,13 +6,20 @@ import {
   FaUsers,
 } from "react-icons/fa";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
+import { funcoes } from "../auth/RequirePerm";
 
-function Sidebar() {
+export default function Sidebar() {
   const location = useLocation();
+  const { pessoa,loading } = useAuth()
+
+  if(loading) return null;
+  if(!pessoa) return <Navigate to="/login" />
+  const regras=funcoes[pessoa.funcao].listar || []
 
   function isActive(path) {
-    return location.pathname === path ? "active" : "";
+    return location.pathname.startsWith(path) ? "active" : "";
   }
 
   return (
@@ -25,43 +32,57 @@ function Sidebar() {
               <span className="menu-icon">
                 <FaHome />
               </span>
-
               <span className="menu-text">Dashboard</span>
             </Link>
           </li>
 
           {/* MÉDICOS */}
-          <li className={isActive("/medicos")}>
-            <Link to="/medicos">
-              <span className="menu-icon">
-                <FaUserMd />
-              </span>
+          {regras.includes("Medico") && (
+            <li className={isActive("/pessoas/medicos")}>
+              <Link to="/pessoas/medicos">
+                <span className="menu-icon">
+                  <FaUserMd />
+                </span>
+                <span className="menu-text">Médicos</span>
+              </Link>
+            </li>
+          )}
 
-              <span className="menu-text">Gerenciar Médicos</span>
-            </Link>
-          </li>
+          {/* ADMINISTRADORES */}
+          {regras.includes("Admin") && (
+            <li className={isActive("/pessoas/admins")}>
+              <Link to="/pessoas/admins">
+                <span className="menu-icon">
+                  <FaUsers />
+                </span>
+                <span className="menu-text">Administradores</span>
+              </Link>
+            </li>
+          )}
 
-          {/* FUNCIONÁRIOS */}
-          <li className={isActive("/funcionarios")}>
-            <Link to="/funcionarios">
-              <span className="menu-icon">
-                <FaUsers />
-              </span>
-
-              <span className="menu-text">Gerenciar Funcionários</span>
-            </Link>
-          </li>
+          {/* ATENDENTES */}
+          {regras.includes("Atendente") && (
+            <li className={isActive("/pessoas/atendentes")}>
+              <Link to="/pessoas/atendentes">
+                <span className="menu-icon">
+                  <FaUsers />
+                </span>
+                <span className="menu-text">Atendentes</span>
+              </Link>
+            </li>
+          )}
 
           {/* PACIENTES */}
-          <li className={isActive("/pacientes")}>
-            <Link to="/pacientes">
-              <span className="menu-icon">
-                <FaHospitalUser />
-              </span>
-
-              <span className="menu-text">Gerenciar Pacientes</span>
-            </Link>
-          </li>
+          {regras.includes("Paciente") && (
+            <li className={isActive("/pessoas/pacientes")}>
+              <Link to="/pessoas/pacientes">
+                <span className="menu-icon">
+                  <FaHospitalUser />
+                </span>
+                <span className="menu-text">Pacientes</span>
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
 
@@ -75,5 +96,3 @@ function Sidebar() {
     </aside>
   );
 }
-
-export default Sidebar;

@@ -1,0 +1,22 @@
+.forbidden-container {
+    display: grid;
+    place-content: center;
+    width: 100%;
+    min-height: 80vh;
+    text-align: center;
+}
+
+.forbidden-img{
+    max-width: 800px;
+    max-height: 400px;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}

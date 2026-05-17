@@ -2,9 +2,10 @@ const PessoaService=require("../services/pessoaService")
 
 class PessoaController{
     static async listarPessoas(req,res){
-        console.log(req.pessoa)
         try{
-            const resultado=await PessoaService.listar(req.pessoa.funcao)
+            const alvo=req.params.funcao
+            const funcao=req.pessoa.funcao
+            const resultado=await PessoaService.listar(funcao,alvo)
             res.status(200).json({pessoas:resultado})
         }catch(error){
             res.status(error.status||500).json({message:error.message})

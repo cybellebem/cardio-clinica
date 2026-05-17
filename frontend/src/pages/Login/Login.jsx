@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -54,6 +55,46 @@ function Login() {
       alert("Erro ao conectar com servidor");
     } finally {
       setLoading(false);
+=======
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../../auth/AuthContext";
+import background from "../../assets/freq-cardiaca.jpeg";
+import logo from "../../assets/logo.jpeg";
+import FormInput from "../../components/FormInput";
+import Button from "../../components/Button";
+import "./Login.css";
+
+export default function Login() {
+  const {login}=useAuth()
+  const navigate=useNavigate()
+  const location=useLocation()
+
+  const [form,setForm]=useState({cpf:"",senha:""})
+  const [error,setError]=useState("")
+  const [loading,setLoading]=useState(false)
+
+  function updateField(e){
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    setError("")
+    setLoading(true)
+    
+    try{
+      await login(form)
+      navigate(location.state?.from?.pathname||"/dashboard",{replace:true})
+    }catch(error){
+      console.error(error)
+      setError("Credenciais inválidas")
+    }finally{
+      setLoading(false)
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
     }
   }
 
@@ -78,6 +119,7 @@ function Login() {
           </div>
         </div>
 
+<<<<<<< HEAD
         <form className="login-form" onSubmit={handleLogin}>
           <label>Nome de usuário:</label>
 
@@ -98,6 +140,30 @@ function Login() {
           />
 
           <button type="submit">{loading ? "Entrando..." : "ENTRAR"}</button>
+=======
+        <form className="login-form" onSubmit={handleSubmit}>
+          <FormInput
+            label="CPF:"
+            type="text"
+            name="cpf"
+            value={form.cpf}
+            placeholder="123.456.789.10"
+            onChange={updateField}
+            required
+          />
+
+          <FormInput
+            label="Senha:"
+            type="password"
+            name="senha"
+            value={form.senha}
+            placeholder="********"
+            onChange={updateField}
+            required
+          />
+
+          <Button type="submit" disabled={loading}>{loading ? "Entrando..." : "Entrar"}</Button>
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
 
           <a href="#">Esqueci minha senha</a>
         </form>
@@ -105,5 +171,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;

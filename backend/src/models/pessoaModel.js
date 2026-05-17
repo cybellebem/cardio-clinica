@@ -3,8 +3,8 @@ const db=require("../config/database")
 const camposSeguros="id,cpf,nome,data_nascimento,telefone,endereco,crm,status,funcao"
 
 class PessoaModel{
-    static async listar(funcoes){
-        const [resultados]=await db.query(`select ${camposSeguros} from pessoas where funcao in (${funcoes.map(()=>'?').join(",")})`,funcoes)
+    static async listar(funcao){
+        const [resultados]=await db.query(`select ${camposSeguros} from pessoas where funcao=?`,[funcao])
         return resultados
     }
 

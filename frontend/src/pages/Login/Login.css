@@ -92,12 +92,13 @@
 
 /* FORM */
 
-.login-form {
+.login-form,
+.login-form label {
   display: flex;
   flex-direction: column;
 }
 
-.login-form label {
+.login-form span {
   color: white;
 
   font-size: 14px;

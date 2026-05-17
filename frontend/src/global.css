@@ -173,7 +173,35 @@ textarea {
   transform: translateY(-2px);
 }
 
+<<<<<<< HEAD
 /* ========================================
+=======
+/* RESPONSIVO */
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 18px;
+  }
+
+  .user-info span {
+    display: none;
+  }
+
+  .logout-button span {
+    display: none;
+  }
+
+  .logout-button {
+    width: 42px;
+
+    padding: 0;
+
+    justify-content: center;
+  }
+}
+
+/* ==================================================
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
    SIDEBAR
 ======================================== */
 
@@ -336,6 +364,7 @@ textarea {
   border-radius: 999px;
 }
 
+<<<<<<< HEAD
 /* ========================================
    MAIN CONTENT
 ======================================== */
@@ -359,6 +388,67 @@ textarea {
 /* ========================================
    TABLE
 ======================================== */
+=======
+/* ==================================================
+   CONTENT AREA
+================================================== */
+
+.content-area {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    grid-template-areas:
+      "header"
+      "content";
+
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+
+    top: var(--header-height);
+    left: 0;
+
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--header-height));
+
+    z-index: 100;
+  }
+
+  .header {
+    padding: 0 20px;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .sidebar .menu li {
+    font-size: 18px;
+  }
+
+  .new-consultation {
+    font-size: 16px;
+  }
+}
+
+/* TABELAS */
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
 
 table {
   width: 100%;
@@ -382,9 +472,21 @@ th,
 td {
   padding: 15px;
 
-  text-align: left;
-
   border-bottom: 1px solid #ddd;
+}
+
+.left {
+  text-align: left;
+}
+
+td,
+th {
+  text-align: center;
+}
+
+td:not(:last-child),
+th:not(:last-child) {
+  border-right: 1px solid black;
 }
 
 tbody tr:hover {
@@ -455,6 +557,7 @@ tbody tr:hover {
   background: var(--primary);
 }
 
+<<<<<<< HEAD
 .chart div:nth-child(1) {
   height: 70%;
 }
@@ -535,3 +638,7 @@ tbody tr:hover {
     width: 100%;
   }
 }
+=======
+  cursor: pointer;
+}
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8

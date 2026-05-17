@@ -1,3 +1,4 @@
+<<<<<<< HEAD:frontend/src/pages/Dashboard.jsx
 import { useEffect, useState } from "react";
 
 import Header from "../components/Header";
@@ -15,11 +16,29 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
 
   const [collapsed, setCollapsed] = useState(false);
+=======
+import "./Dashboard.css";
 
-  function toggleSidebar() {
-    setCollapsed(!collapsed);
-  }
+export default function Dashboard() {
+	return (
+		<>
+			{/* CONSULTAS */}
+			<section className="table">
+				<h2>Consultas do dia</h2>
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8:frontend/src/pages/Dashboard/Dashboard.jsx
 
+				<table>
+					<thead>
+						<tr>
+							<th>Hora</th>
+							<th>Paciente</th>
+							<th>Médico</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+
+<<<<<<< HEAD:frontend/src/pages/Dashboard.jsx
   useEffect(() => {
     async function fetchDashboard() {
       try {
@@ -77,18 +96,30 @@ function Dashboard() {
           {/* CONSULTAS */}
           <section className="table">
             <h2>Consultas do dia</h2>
+=======
+					<tbody>
+						<tr>
+							<td>08:00</td>
+							<td>Nome do Paciente</td>
+							<td>Nome do Médico</td>
+							<td>Agendada</td>
+							<td>👁️</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
 
-            <table>
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Paciente</th>
-                  <th>Médico</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
+			{/* RESUMO */}
+			<section className="summary">
+				<h2>Resumo mensal</h2>
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8:frontend/src/pages/Dashboard/Dashboard.jsx
 
+				<div className="cards">
+					<div className="card">
+						<h3>Total de consultas</h3>
+						<h1>120</h1>
+
+<<<<<<< HEAD:frontend/src/pages/Dashboard.jsx
               <tbody>
                 {dashboardData.consultasHoje.length > 0 ? (
                   dashboardData.consultasHoje.map((consulta) => (
@@ -112,30 +143,50 @@ function Dashboard() {
               </tbody>
             </table>
           </section>
+=======
+						<div className="chart">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8:frontend/src/pages/Dashboard/Dashboard.jsx
 
-          {/* RESUMO */}
-          <section className="summary">
-            <h2>Resumo mensal</h2>
+					<div className="card">
+						<h3>Novos pacientes</h3>
+						<h1>18</h1>
 
+<<<<<<< HEAD:frontend/src/pages/Dashboard.jsx
             <div className="cards">
               {/* CONSULTAS */}
               <div className="card">
                 <h3>Total de consultas</h3>
 
                 <h1>{dashboardData.totalConsultas}</h1>
+=======
+						<div className="chart">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8:frontend/src/pages/Dashboard/Dashboard.jsx
 
-                <div className="chart">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              </div>
+					<div className="card">
+						<h3>Faturamento</h3>
+						<h1>R$ XXX</h1>
 
+<<<<<<< HEAD:frontend/src/pages/Dashboard.jsx
               {/* PACIENTES */}
               <div className="card">
                 <h3>Total de pacientes</h3>
@@ -180,3 +231,21 @@ function Dashboard() {
 }
 
 export default Dashboard;
+=======
+						<div className="chart">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</>
+	);
+}
+>>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8:frontend/src/pages/Dashboard/Dashboard.jsx

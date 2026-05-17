@@ -1,7 +1,7 @@
 @login=http://localhost:3000/auth/login
 @pessoa=http://localhost:3000/pessoas
-@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg2NDE2MjEsImV4cCI6MTc3ODY0NTIyMX0.BogkKj6Lv60QbJShiLZCOrkmuUPoGUcAjjsZ9JQqtC8
-@tokenPaciente=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZnVuY2FvIjoiUGFjaWVudGUiLCJpYXQiOjE3Nzg2NDExNTgsImV4cCI6MTc3ODY0NDc1OH0.rBXYHuQkIDgH6NqCObB-ka5dKxrohD0wiMc-M6A2jk4
+@tokenAdmin=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnVuY2FvIjoiQWRtaW4iLCJpYXQiOjE3Nzg5NzQ1MTgsImV4cCI6MTc3ODk3ODExOH0.jpHuMm0UZ6eXLyTEL7KZkZw3HEZVyevCAQaHSMtRPl8
+@tokenPaciente=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZnVuY2FvIjoiUGFjaWVudGUiLCJpYXQiOjE3Nzg5NzU2NDQsImV4cCI6MTc3ODk3OTI0NH0.fY6ea2RktnSnDJPRSmDXuyyBpwwtvmoS_Re2GCcLJVk
 
 ### login admin
 POST {{login}}
@@ -30,6 +30,10 @@ Authorization: Bearer {{tokenAdmin}}
     "funcao": "Atendente"
 }
 
-### paciente lista usuários
+### paciente NÃO lista usuários
 GET {{pessoa}}/lista
 Authorization: Bearer {{tokenPaciente}}
+
+### admin lista admins
+GET {{pessoa}}/lista?funcao=Admin
+Authorization: Bearer {{tokenAdmin}}
