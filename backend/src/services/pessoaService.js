@@ -76,43 +76,13 @@ const funcoes = {
   },
 };
 
-<<<<<<< HEAD
-// const permissoesListar={
-//     Admin:["Admin","Atendente","Medico","Paciente"],
-//     Atendente:["Medico","Paciente"],
-//     Medico:["Paciente"],
-//     Paciente:[]
-// }
 
-// const permissoesGerenciar={
-//     Admin:["Admin","Atendente"],
-//     Atendente:["Medico","Paciente"],
-//     Medico:[],
-//     Paciente:[]
-// }
-
-// const regras={
-//     Minimo:["cpf","nome","telefone","funcao"],
-//     Medico:["crm","endereco","senha"],
-//     Atendente:["endereco","senha"],
-//     Admin:["endereco","senha"],
-//     Paciente:["data_nascimento"]
-// }
-
-class PessoaService {
-  static async listar(funcao) {
-    const funcoesPermitidas = funcoes[funcao]?.listar || [];
-    if (funcoesPermitidas.length === 0) erro("Acesso negado", 403);
-    return await PessoaModel.listar(funcoesPermitidas);
-  }
-=======
 class PessoaService{
     static async listar(funcaoReq,funcaoAlvo){
         const funcoesPermitidas=funcoes[funcaoReq]?.listar||[]
         if(!funcoesPermitidas.includes(funcaoAlvo)) erro("Acesso negado",403);
         return await PessoaModel.listar(funcaoAlvo)
     }
->>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
 
   static async buscarPorId(id, requisitante) {
     const pessoa = await PessoaModel.buscarPorId(id);
@@ -120,19 +90,11 @@ class PessoaService{
 
     const permissoesReq = funcoes[requisitante.funcao] || {};
 
-<<<<<<< HEAD
-    const permitido =
-      id == requisitante.id ||
-      (permissoesReq.listar || []).includes(pessoa.funcao) ||
-      (permissoesReq.gerenciar || []).includes(pessoa.funcao);
-    if (!permitido) erro("Acesso negado", 403);
-=======
         const permitido=
             Number(id)===Number(requisitante.id)
             ||(permissoesReq.listar||[]).includes(pessoa.funcao)
             ||(permissoesReq.gerenciar||[]).includes(pessoa.funcao)
         if(!permitido) erro("Acesso negado",403);
->>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
 
     return pessoa;
   }
