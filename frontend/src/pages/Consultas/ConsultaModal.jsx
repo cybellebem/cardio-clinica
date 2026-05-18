@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { http } from "../../api/http";
 import { useAuth } from "../../auth/AuthContext";
 
-import "./ConsultaModal.css";
+import "../../components/Modal.css";
 
 export default function ConsultaModal({ isOpen, onClose }) {
   const { pessoa } = useAuth();
 
   const [pacientes, setPacientes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const [formData, setFormData] = useState({
     data: "",
@@ -25,6 +26,7 @@ export default function ConsultaModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) carregarPacientes();
+    else setValidated(false);
   }, [isOpen]);
 
   useEffect(() => {
@@ -88,6 +90,9 @@ export default function ConsultaModal({ isOpen, onClose }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setValidated(true);
+
+    if (!e.target.checkValidity()) return;
 
     try {
       setLoading(true);
@@ -141,7 +146,7 @@ export default function ConsultaModal({ isOpen, onClose }) {
           </button>
         </div>
 
-        <form id="consulta-form" className="modal-form" onSubmit={handleSubmit}>
+        <form id="consulta-form" className={`modal-form ${validated ? "was-validated" : ""}`} onSubmit={handleSubmit} noValidate>
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="data">Data</label>

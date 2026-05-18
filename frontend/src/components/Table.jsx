@@ -7,6 +7,7 @@ function Table({
   onSearch,
   onNewClick,
   newButtonText,
+  showNewButton = true,
   onEdit,
   onDelete,
 }) {
@@ -21,10 +22,12 @@ function Table({
             <span>Pesquisar</span>
           </button>
 
-          <button className="new-button" onClick={onNewClick}>
-            <FaPlus />
-            <span>{newButtonText}</span>
-          </button>
+          {showNewButton && (
+            <button className="new-button" onClick={onNewClick}>
+              <FaPlus />
+              <span>{newButtonText}</span>
+            </button>
+          )}
         </div>
       </div>
 

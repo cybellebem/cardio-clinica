@@ -20,6 +20,13 @@ export const funcoes={
     }
 }
 
+export function usePerm(action, target) {
+    const { pessoa } = useAuth()
+    if (!pessoa) return false
+    const regras = funcoes[pessoa.funcao] || {}
+    return regras[action]?.includes(target) ?? false
+}
+
 export default function RequirePerm({action,target,children}){
     const {pessoa,loading}=useAuth()
 
