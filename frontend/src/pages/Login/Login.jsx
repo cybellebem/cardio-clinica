@@ -1,61 +1,60 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 
-import background from "../../assets/freq-cardiaca.jpeg";
-import logo from "../../assets/logo.jpeg";
+// import background from "../../assets/freq-cardiaca.jpeg";
+// import logo from "../../assets/logo.jpeg";
 
-import "./Login.css";
+// import "./Login.css";
 
-function Login() {
-  const navigate = useNavigate();
+// function Login() {
+//   const navigate = useNavigate();
 
-  const [cpf, setCpf] = useState("");
-  const [senha, setSenha] = useState("");
+//   const [cpf, setCpf] = useState("");
+//   const [senha, setSenha] = useState("");
 
-  const [loading, setLoading] = useState(false);
+//   const [loading, setLoading] = useState(false);
 
-  async function handleLogin(event) {
-    event.preventDefault();
+//   async function handleLogin(event) {
+//     event.preventDefault();
 
-    try {
-      setLoading(true);
+//     try {
+//       setLoading(true);
 
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
+//       const response = await fetch("http://localhost:3000/auth/login", {
+//         method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
 
-        body: JSON.stringify({
-          cpf,
-          senha,
-        }),
-      });
+//         body: JSON.stringify({
+//           cpf,
+//           senha,
+//         }),
+//       });
 
-      const data = await response.json();
+//       const data = await response.json();
 
-      if (!response.ok) {
-        alert(data.message || "Erro ao fazer login");
-        return;
-      }
+//       if (!response.ok) {
+//         alert(data.message || "Erro ao fazer login");
+//         return;
+//       }
 
-      // salva token
-      localStorage.setItem("token", data.token);
+//       // salva token
+//       localStorage.setItem("token", data.token);
 
-      // salva usuário se quiser
-      localStorage.setItem("cpf", JSON.stringify(data.cpf));
+//       // salva usuário se quiser
+//       localStorage.setItem("cpf", JSON.stringify(data.cpf));
 
-      // redireciona
-      navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
+//       // redireciona
+//       navigate("/dashboard");
+//     } catch (error) {
+//       console.error(error);
 
-      alert("Erro ao conectar com servidor");
-    } finally {
-      setLoading(false);
-=======
+//       alert("Erro ao conectar com servidor");
+//     } finally {
+//       setLoading(false);
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
@@ -94,7 +93,6 @@ export default function Login() {
       setError("Credenciais inválidas")
     }finally{
       setLoading(false)
->>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
     }
   }
 
@@ -119,8 +117,7 @@ export default function Login() {
           </div>
         </div>
 
-<<<<<<< HEAD
-        <form className="login-form" onSubmit={handleLogin}>
+        {/* <form className="login-form" onSubmit={handleLogin}>
           <label>Nome de usuário:</label>
 
           <input
@@ -139,8 +136,7 @@ export default function Login() {
             onChange={(e) => setSenha(e.target.value)}
           />
 
-          <button type="submit">{loading ? "Entrando..." : "ENTRAR"}</button>
-=======
+          <button type="submit">{loading ? "Entrando..." : "ENTRAR"}</button> */}
         <form className="login-form" onSubmit={handleSubmit}>
           <FormInput
             label="CPF:"
@@ -163,7 +159,6 @@ export default function Login() {
           />
 
           <Button type="submit" disabled={loading}>{loading ? "Entrando..." : "Entrar"}</Button>
->>>>>>> 6c0822d5b44bfa10d781bb3c041b1143e3a7b5f8
 
           <a href="#">Esqueci minha senha</a>
         </form>

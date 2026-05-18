@@ -5,14 +5,14 @@ import PessoaModal from "../components/PessoaModal";
 import Sidebar from "../components/Sidebar";
 import Table from "../components/Table";
 
-function Pacientes() {
+function Medicos() {
   const [openModal, setOpenModal] = useState(false);
 
   const [selectedPessoa, setSelectedPessoa] = useState(null);
 
   const [collapsed, setCollapsed] = useState(false);
 
-  const [pacientes, setPacientes] = useState([]);
+  const [medicos, setMedicos] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -20,7 +20,7 @@ function Pacientes() {
     setCollapsed(!collapsed);
   }
 
-  async function fetchPacientes() {
+  async function fetchMedicos() {
     try {
       setLoading(true);
 
@@ -38,23 +38,15 @@ function Pacientes() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message || "Erro ao carregar pacientes");
+        alert(data.message || "Erro ao carregar médicos");
         return;
       }
 
-      const somentePacientes = data.pessoas.filter(
-        (pessoa) => pessoa.funcao === "Paciente",
+      const somenteMedicos = data.pessoas.filter(
+        (pessoa) => pessoa.funcao === "Medico",
       );
 
-      const pacientesFormatados = somentePacientes.map((paciente) => ({
-        ...paciente,
-
-        data_nascimento: paciente.data_nascimento
-          ? new Date(paciente.data_nascimento).toLocaleDateString("pt-BR")
-          : "-",
-      }));
-
-      setPacientes(pacientesFormatados);
+      setMedicos(somenteMedicos);
     } catch (error) {
       console.error(error);
 
@@ -65,7 +57,7 @@ function Pacientes() {
   }
 
   useEffect(() => {
-    fetchPacientes();
+    fetchMedicos();
   }, []);
 
   function handleEdit(pessoa) {
@@ -95,13 +87,13 @@ function Pacientes() {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message || "Erro ao desativar paciente");
+        alert(data.message || "Erro ao desativar médico");
         return;
       }
 
-      alert("Paciente desativado com sucesso");
+      alert("Médico desativado com sucesso");
 
-      fetchPacientes();
+      fetchMedicos();
     } catch (error) {
       console.error(error);
 
@@ -114,20 +106,13 @@ function Pacientes() {
 
     { label: "Nome", accessor: "nome" },
 
-    { label: "CPF", accessor: "cpf" },
-
-    {
-      label: "Data de Nascimento",
-      accessor: "data_nascimento",
-    },
-
-    { label: "Telefone", accessor: "telefone" },
+    { label: "CRM", accessor: "crm" },
 
     { label: "Status", accessor: "status" },
   ];
 
   if (loading) {
-    return <h1>Carregando pacientes...</h1>;
+    return <h1>Carregando médicos...</h1>;
   }
 
   return (
@@ -143,10 +128,10 @@ function Pacientes() {
 
         <main className="main-content">
           <Table
-            title="Pacientes"
+            title="Médicos"
             columns={columns}
-            data={pacientes}
-            newButtonText="Novo Paciente"
+            data={medicos}
+            newButtonText="Novo Médico"
             onNewClick={() => {
               setSelectedPessoa(null);
 
@@ -156,6 +141,7 @@ function Pacientes() {
             onDelete={handleDelete}
           />
         </main>
+
         <PessoaModal
           isOpen={openModal}
           onClose={() => {
@@ -163,13 +149,13 @@ function Pacientes() {
 
             setSelectedPessoa(null);
           }}
-          tipo="Paciente"
+          tipo="Medico"
           pessoa={selectedPessoa}
-          onSuccess={fetchPacientes}
+          onSuccess={fetchMedicos}
         />
       </div>
     </div>
   );
 }
 
-export default Pacientes;
+export default Medicos;
