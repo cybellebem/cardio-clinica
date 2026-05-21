@@ -33,6 +33,7 @@ export default function PessoaModal({ isOpen, onClose, funcao, pessoa, onSuccess
   const [loading, setLoading] = useState(false)
   const [validated, setValidated] = useState(false)
   const [formData, setFormData] = useState(emptyForm)
+  const [errorMessage, setErrorMessage] = useState("");
 
   const editando = !!pessoa
 
@@ -88,7 +89,12 @@ export default function PessoaModal({ isOpen, onClose, funcao, pessoa, onSuccess
     e.preventDefault()
     setValidated(true)
 
-    if (!e.target.checkValidity()) return
+    if (!e.target.checkValidity()) {
+      setErrorMessage("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    setErrorMessage("");
 
     try {
       setLoading(true)
@@ -125,7 +131,11 @@ export default function PessoaModal({ isOpen, onClose, funcao, pessoa, onSuccess
             ✕
           </button>
         </div>
-
+        {errorMessage && (
+        <div className="modal-error">
+          {errorMessage}
+        </div>
+        )}
         <form id="pessoa-form" className={`modal-form ${validated ? "was-validated" : ""}`} onSubmit={handleSubmit} noValidate>
           <div className="form-field">
             <label htmlFor="cpf">CPF</label>

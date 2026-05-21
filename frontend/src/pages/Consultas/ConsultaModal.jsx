@@ -11,10 +11,19 @@ export default function ConsultaModal({ isOpen, onClose }) {
   const [pacientes, setPacientes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function getCurrentDate() {
+    return new Date().toISOString().split("T")[0];
+  }
+
+  function getCurrentTime() {
+    return new Date().toTimeString().slice(0, 5);
+  }
 
   const [formData, setFormData] = useState({
-    data: "",
-    hora: "",
+    data: getCurrentDate(),
+    hora: getCurrentTime(),
     id_paciente: "",
     id_medico: pessoa?.id || "",
     sintomas: "",
@@ -31,9 +40,24 @@ export default function ConsultaModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (pessoa) {
-      setFormData((prev) => ({ ...prev, id_medico: pessoa.id }));
+      setFormData((prev) => ({
+        ...prev,
+        id_medico: pessoa.id,
+      }));
     }
   }, [pessoa]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFormData((prev) => ({
+        ...prev,
+        data: getCurrentDate(),
+        hora: getCurrentTime(),
+      }));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (!isOpen) return null;
 
@@ -48,51 +72,63 @@ export default function ConsultaModal({ isOpen, onClose }) {
   }
 
   function handleChange(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   }
 
   function applyDecimalMask(value, intDigits) {
     if (value.includes(".")) {
       const dotIndex = value.indexOf(".");
-      const intPart = value.slice(0, dotIndex).replace(/\D/g, "").slice(0, intDigits);
-      const decPart = value.slice(dotIndex + 1).replace(/\D/g, "").slice(0, 1);
+
+      const intPart = value
+        .slice(0, dotIndex)
+        .replace(/\D/g, "")
+        .slice(0, intDigits);
+
+      const decPart = value
+        .slice(dotIndex + 1)
+        .replace(/\D/g, "")
+        .slice(0, 1);
+
       return intPart + "." + decPart;
     }
-    const digits = value.replace(/\D/g, "").slice(0, intDigits + 1);
+
+    const digits = value
+      .replace(/\D/g, "")
+      .slice(0, intDigits + 1);
+
     return digits.length === intDigits + 1
       ? digits.slice(0, intDigits) + "." + digits.slice(intDigits)
       : digits;
   }
 
   function handleTemperaturaInput(e) {
-    setFormData({ ...formData, temperatura: applyDecimalMask(e.target.value, 2) });
+    setFormData({
+      ...formData,
+      temperatura: applyDecimalMask(e.target.value, 2),
+    });
   }
 
   function handlePesoInput(e) {
-    setFormData({ ...formData, peso: applyDecimalMask(e.target.value, 3) });
-  }
-
-  function handleHoraInput(e) {
-    const raw = e.target.value.replace(/\D/g, "").slice(0, 4);
-
-    let h = raw.slice(0, 2);
-    let m = raw.slice(2, 4);
-
-    if (h.length === 2 && parseInt(h, 10) > 23) h = "23";
-    if (m.length === 2 && parseInt(m, 10) > 59) m = "59";
-
-    const combined = h + m;
-    const formatted =
-      combined.length >= 3 ? combined.slice(0, 2) + ":" + combined.slice(2) : combined;
-
-    setFormData({ ...formData, hora: formatted });
+    setFormData({
+      ...formData,
+      peso: applyDecimalMask(e.target.value, 3),
+    });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     setValidated(true);
 
-    if (!e.target.checkValidity()) return;
+    if (!e.target.checkValidity()) {
+      setErrorMessage("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    setErrorMessage("");
 
     try {
       setLoading(true);
@@ -101,6 +137,7 @@ export default function ConsultaModal({ isOpen, onClose }) {
         ...formData,
         data_hora: `${formData.data}T${formData.hora}`,
       };
+
       delete payload.data;
       delete payload.hora;
 
@@ -109,8 +146,8 @@ export default function ConsultaModal({ isOpen, onClose }) {
       alert("Consulta criada com sucesso");
 
       setFormData({
-        data: "",
-        hora: "",
+        data: getCurrentDate(),
+        hora: getCurrentTime(),
         id_paciente: "",
         id_medico: pessoa.id,
         sintomas: "",
@@ -121,10 +158,15 @@ export default function ConsultaModal({ isOpen, onClose }) {
       });
 
       onClose();
+
       window.location.reload();
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || "Erro ao criar consulta");
+
+      alert(
+        error.response?.data?.message ||
+          "Erro ao criar consulta"
+      );
     } finally {
       setLoading(false);
     }
@@ -145,39 +187,50 @@ export default function ConsultaModal({ isOpen, onClose }) {
             ✕
           </button>
         </div>
-
-        <form id="consulta-form" className={`modal-form ${validated ? "was-validated" : ""}`} onSubmit={handleSubmit} noValidate>
+      {errorMessage && (
+        <div className="modal-error">
+          {errorMessage}
+        </div>
+      )}
+        <form
+          id="consulta-form"
+          className={`modal-form ${
+            validated ? "was-validated" : ""
+          }`}
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <div className="form-row">
             <div className="form-field">
               <label htmlFor="data">Data</label>
+
               <input
                 id="data"
                 type="date"
                 name="data"
                 value={formData.data}
-                onChange={handleChange}
-                required
+                disabled
+                readOnly
               />
             </div>
 
             <div className="form-field">
               <label htmlFor="hora">Hora</label>
+
               <input
                 id="hora"
                 type="text"
-                inputMode="numeric"
                 name="hora"
-                placeholder="HH:MM"
-                maxLength={5}
                 value={formData.hora}
-                onChange={handleHoraInput}
-                required
+                disabled
+                readOnly
               />
             </div>
           </div>
 
           <div className="form-field">
             <label>Médico responsável</label>
+
             <input
               type="text"
               value={pessoa?.nome || ""}
@@ -186,7 +239,10 @@ export default function ConsultaModal({ isOpen, onClose }) {
           </div>
 
           <div className="form-field">
-            <label htmlFor="id_paciente">Paciente</label>
+            <label htmlFor="id_paciente">
+              Paciente
+            </label>
+
             <select
               id="id_paciente"
               name="id_paciente"
@@ -194,10 +250,15 @@ export default function ConsultaModal({ isOpen, onClose }) {
               onChange={handleChange}
               required
             >
-              <option value="">Selecione o paciente</option>
+              <option value="">
+                Selecione o paciente
+              </option>
 
               {pacientes.map((paciente) => (
-                <option key={paciente.id} value={paciente.id}>
+                <option
+                  key={paciente.id}
+                  value={paciente.id}
+                >
                   {paciente.nome}
                 </option>
               ))}
@@ -205,7 +266,10 @@ export default function ConsultaModal({ isOpen, onClose }) {
           </div>
 
           <div className="form-field">
-            <label htmlFor="sintomas">Sintomas</label>
+            <label htmlFor="sintomas">
+              Sintomas
+            </label>
+
             <textarea
               id="sintomas"
               name="sintomas"
@@ -218,7 +282,10 @@ export default function ConsultaModal({ isOpen, onClose }) {
 
           <div className="form-row">
             <div className="form-field">
-              <label htmlFor="temperatura">Temperatura (°C)</label>
+              <label htmlFor="temperatura">
+                Temperatura (°C)
+              </label>
+
               <input
                 id="temperatura"
                 type="text"
@@ -232,7 +299,10 @@ export default function ConsultaModal({ isOpen, onClose }) {
             </div>
 
             <div className="form-field">
-              <label htmlFor="peso">Peso (kg)</label>
+              <label htmlFor="peso">
+                Peso (kg)
+              </label>
+
               <input
                 id="peso"
                 type="text"
@@ -247,7 +317,10 @@ export default function ConsultaModal({ isOpen, onClose }) {
           </div>
 
           <div className="form-field">
-            <label htmlFor="diagnostico">Diagnóstico</label>
+            <label htmlFor="diagnostico">
+              Diagnóstico
+            </label>
+
             <textarea
               id="diagnostico"
               name="diagnostico"
@@ -259,7 +332,10 @@ export default function ConsultaModal({ isOpen, onClose }) {
           </div>
 
           <div className="form-field">
-            <label htmlFor="tratamento">Tratamento</label>
+            <label htmlFor="tratamento">
+              Tratamento
+            </label>
+
             <textarea
               id="tratamento"
               name="tratamento"
@@ -286,7 +362,9 @@ export default function ConsultaModal({ isOpen, onClose }) {
             className="save-button"
             disabled={loading}
           >
-            {loading ? "Salvando..." : "Salvar Consulta"}
+            {loading
+              ? "Salvando..."
+              : "Salvar Consulta"}
           </button>
         </div>
       </div>
